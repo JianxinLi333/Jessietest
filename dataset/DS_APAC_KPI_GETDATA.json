@@ -1,0 +1,49 @@
+{
+	"name": "DS_APAC_KPI_GETDATA",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"pFileName": {
+				"type": "string"
+			},
+			"pFolderName": {
+				"type": "string"
+			},
+			"pContainerName": {
+				"type": "string"
+			},
+			"pSheetIndex": {
+				"type": "int"
+			}
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().pFileName",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().pFolderName",
+					"type": "Expression"
+				},
+				"container": {
+					"value": "@dataset().pContainerName",
+					"type": "Expression"
+				}
+			},
+			"sheetIndex": {
+				"value": "@dataset().pSheetIndex",
+				"type": "Expression"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

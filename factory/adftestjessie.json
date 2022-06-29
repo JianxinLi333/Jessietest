@@ -1,0 +1,15 @@
+{
+	"name": "adftestjessie",
+	"location": "chinanorth2",
+	"identity": {
+		"type": "SystemAssigned,UserAssigned",
+		"principalId": "5705e840-f282-4cd2-914c-1132f90b079a",
+		"tenantId": "b388b808-0ec9-4a09-a414-a7cbbd8b7e9b",
+		"userAssignedIdentities": {
+			"/subscriptions/48005cc9-8069-4f08-a110-fcd36b6c3e7d/resourcegroups/SQLRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/managedidentity-jessie": {
+				"clientId": "4829d443-c00c-4319-b5ad-f63f2c54f1e5",
+				"principalId": "25bcd138-0137-4668-936c-daeaf7256fc1"
+			}
+		}
+	}
+}

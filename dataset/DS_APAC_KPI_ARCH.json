@@ -1,0 +1,40 @@
+{
+	"name": "DS_APAC_KPI_ARCH",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"pSrcArchFolderName": {
+				"type": "string"
+			},
+			"pFileName": {
+				"type": "string"
+			},
+			"pContainerName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().pFileName",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().pSrcArchFolderName",
+					"type": "Expression"
+				},
+				"container": {
+					"value": "@dataset().pContainerName",
+					"type": "Expression"
+				}
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

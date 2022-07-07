@@ -1,0 +1,7 @@
+{
+	"name": "adlscn3jessie",
+	"properties": {
+		"privateLinkResourceId": "/subscriptions/48005cc9-8069-4f08-a110-fcd36b6c3e7d/resourceGroups/test0624/providers/Microsoft.Storage/storageAccounts/adlscn3jessie",
+		"groupId": "dfs"
+	}
+}

@@ -1,0 +1,16 @@
+{
+	"name": "Hdfs1",
+	"properties": {
+		"annotations": [],
+		"type": "Hdfs",
+		"typeProperties": {
+			"url": "http://192.168.52.150:14000/webhdfs/v1/",
+			"authenticationType": "Anonymous",
+			"userName": "root"
+		},
+		"connectVia": {
+			"referenceName": "self-ir",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

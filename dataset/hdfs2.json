@@ -1,0 +1,19 @@
+{
+	"name": "hdfs2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Hdfs1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "HdfsLocation",
+				"fileName": "testinput.txt",
+				"folderPath": "input"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

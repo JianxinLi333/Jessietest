@@ -1,12 +1,14 @@
 {
 	"name": "Hdfs1",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
 		"annotations": [],
 		"type": "Hdfs",
 		"typeProperties": {
-			"url": "http://192.168.52.150:14000/webhdfs/v1/",
-			"authenticationType": "Anonymous",
-			"userName": "root"
+			"url": "http://52.130.158.42:9864/webhdfs/v1/",
+			"authenticationType": "Windows",
+			"userName": "jessie",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJmODZlMGM2YS1mZGZkLTQwNWQtYjdhNi1jMGVlNWUyYTYxOGYiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
 		},
 		"connectVia": {
 			"referenceName": "self-ir",

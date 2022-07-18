@@ -11,9 +11,13 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage1'"
 		},
-		"AzureSqlDatabase_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase'"
+		"Hdfs1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "http://192.168.52.150:14000/webhdfs/v1/"
+		},
+		"Hdfs1_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "root"
 		},
 		"containerUri": {
 			"type": "string",
@@ -45,8 +49,11 @@
 					"AzureBlobStorage1_connectionString": {
 						"value": "[parameters('AzureBlobStorage1_connectionString')]"
 					},
-					"AzureSqlDatabase_connectionString": {
-						"value": "[parameters('AzureSqlDatabase_connectionString')]"
+					"Hdfs1_properties_typeProperties_url": {
+						"value": "[parameters('Hdfs1_properties_typeProperties_url')]"
+					},
+					"Hdfs1_properties_typeProperties_userName": {
+						"value": "[parameters('Hdfs1_properties_typeProperties_userName')]"
 					}
 				}
 			},

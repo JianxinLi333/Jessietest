@@ -8,8 +8,11 @@
 		"AzureBlobStorage1_connectionString": {
 			"value": ""
 		},
-		"AzureSqlDatabase_connectionString": {
-			"value": ""
+		"Hdfs1_properties_typeProperties_url": {
+			"value": "http://192.168.52.150:14000/webhdfs/v1/"
+		},
+		"Hdfs1_properties_typeProperties_userName": {
+			"value": "root"
 		}
 	}
 }

@@ -10,8 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "HdfsLocation",
-				"fileName": "testinput.txt",
-				"folderPath": "input"
+				"fileName": "test.json"
 			}
 		}
 	},

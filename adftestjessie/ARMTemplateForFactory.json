@@ -11,13 +11,17 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage1'"
 		},
+		"Hdfs1_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'Hdfs1'"
+		},
 		"Hdfs1_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "http://192.168.52.150:14000/webhdfs/v1/"
+			"defaultValue": "http://52.130.158.42:9870/webhdfs/v1/"
 		},
 		"Hdfs1_properties_typeProperties_userName": {
 			"type": "string",
-			"defaultValue": "root"
+			"defaultValue": "user"
 		}
 	},
 	"variables": {
@@ -134,8 +138,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "HdfsLocation",
-						"fileName": "testinput.txt",
-						"folderPath": "input"
+						"fileName": "test.json"
 					}
 				}
 			},
@@ -165,8 +168,12 @@
 				"type": "Hdfs",
 				"typeProperties": {
 					"url": "[parameters('Hdfs1_properties_typeProperties_url')]",
-					"authenticationType": "Anonymous",
-					"userName": "[parameters('Hdfs1_properties_typeProperties_userName')]"
+					"authenticationType": "Windows",
+					"userName": "[parameters('Hdfs1_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('Hdfs1_password')]"
+					}
 				},
 				"connectVia": {
 					"referenceName": "self-ir",

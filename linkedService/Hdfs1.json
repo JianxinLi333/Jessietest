@@ -5,10 +5,10 @@
 		"annotations": [],
 		"type": "Hdfs",
 		"typeProperties": {
-			"url": "http://52.130.158.42:9864/webhdfs/v1/",
+			"url": "http://52.130.158.42:9870/webhdfs/v1/",
 			"authenticationType": "Windows",
 			"userName": "jessie",
-			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJmODZlMGM2YS1mZGZkLTQwNWQtYjdhNi1jMGVlNWUyYTYxOGYiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI2NTE0YmQ2MS1lY2EwLTRhMDItOTk5Zi00YzY1MzFlZTJhMjIiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
 		},
 		"connectVia": {
 			"referenceName": "self-ir",

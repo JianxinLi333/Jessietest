@@ -138,7 +138,8 @@
 				"typeProperties": {
 					"location": {
 						"type": "HdfsLocation",
-						"fileName": "test2.json"
+						"fileName": "blob2.json",
+						"folderPath": "111"
 					}
 				}
 			},

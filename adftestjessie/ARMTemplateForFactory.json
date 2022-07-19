@@ -138,7 +138,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "HdfsLocation",
-						"fileName": "test.json"
+						"fileName": "test2.json"
 					}
 				}
 			},

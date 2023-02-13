@@ -1,0 +1,9 @@
+{
+	"name": "jessieadf",
+	"location": "chinanorth2",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "c86457f9-934e-4e5a-97b9-88743d710b00",
+		"tenantId": "b388b808-0ec9-4a09-a414-a7cbbd8b7e9b"
+	}
+}

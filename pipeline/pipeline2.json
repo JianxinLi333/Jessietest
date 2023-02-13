@@ -1,0 +1,71 @@
+{
+	"name": "pipeline2",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureMySqlSource",
+						"query": "select * from testT",
+						"queryTimeout": "02:00:00"
+					},
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "AzureMySqlTable1",
+						"type": "DatasetReference",
+						"parameters": {
+							"tableName": "testT"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Parquet1",
+						"type": "DatasetReference",
+						"parameters": {
+							"filePath": "test0210",
+							"containerName": "output",
+							"fileName": "testT"
+						}
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "folder1"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-02-10T05:12:41Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

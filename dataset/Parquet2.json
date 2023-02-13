@@ -1,0 +1,98 @@
+{
+	"name": "Parquet2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "folder1"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "t_task_list_test.parquet",
+				"folderPath": "cxdata",
+				"fileSystem": "output"
+			},
+			"compressionCodec": "gzip"
+		},
+		"schema": [
+			{
+				"name": "task_id",
+				"type": "INT32"
+			},
+			{
+				"name": "commitment_id",
+				"type": "INT32"
+			},
+			{
+				"name": "use_case_id",
+				"type": "INT32"
+			},
+			{
+				"name": "task_name",
+				"type": "UTF8"
+			},
+			{
+				"name": "task_main_type",
+				"type": "UTF8"
+			},
+			{
+				"name": "task_type",
+				"type": "UTF8"
+			},
+			{
+				"name": "task_status",
+				"type": "UTF8"
+			},
+			{
+				"name": "task_desc",
+				"type": "UTF8"
+			},
+			{
+				"name": "sas_id",
+				"type": "INT32"
+			},
+			{
+				"name": "create_time",
+				"type": "INT96"
+			},
+			{
+				"name": "update_time",
+				"type": "INT96"
+			},
+			{
+				"name": "create_by",
+				"type": "UTF8"
+			},
+			{
+				"name": "update_by",
+				"type": "UTF8"
+			},
+			{
+				"name": "version",
+				"type": "INT32"
+			},
+			{
+				"name": "direction_status",
+				"type": "UTF8"
+			},
+			{
+				"name": "sync_status",
+				"type": "UTF8"
+			},
+			{
+				"name": "is_delete",
+				"type": "UTF8"
+			},
+			{
+				"name": "is_trigger",
+				"type": "UTF8"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

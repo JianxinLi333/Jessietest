@@ -1,0 +1,48 @@
+{
+	"name": "AzureMySqlTable1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureMySql1",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"tableName": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "folder1"
+		},
+		"annotations": [],
+		"type": "AzureMySqlTable",
+		"schema": [
+			{
+				"name": "task_id",
+				"precision": 10,
+				"scale": 0
+			},
+			{
+				"name": "commitment_id",
+				"precision": 10,
+				"scale": 0
+			},
+			{
+				"name": "create_time",
+				"precision": 19,
+				"scale": 0
+			},
+			{
+				"name": "update_time",
+				"precision": 19,
+				"scale": 0
+			}
+		],
+		"typeProperties": {
+			"tableName": {
+				"value": "@dataset().tableName",
+				"type": "Expression"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

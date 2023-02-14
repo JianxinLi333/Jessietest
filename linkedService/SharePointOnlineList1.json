@@ -1,0 +1,14 @@
+{
+	"name": "SharePointOnlineList1",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "SharePointOnlineList",
+		"typeProperties": {
+			"siteUrl": "https://mcpbi.sharepoint.cn/",
+			"tenantId": "5691a5bf-29c0-43e2-b547-1377a4110078",
+			"servicePrincipalId": "371dfc71-2a41-40f4-995c-b11f4b244b7b",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDFEMTRERjNCLTU5NjEtNDhBRi04Mjk5LTRBQTE4RDA3NEVCMl83YmRhZTAzNy1lOTI3LTQwNjYtODc1ZC0xNmM2MjA3YTI1ZGQiDQp9"
+		}
+	}
+}

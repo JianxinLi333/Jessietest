@@ -1,0 +1,51 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "jessieadf"
+		},
+		"AzureBatch1_accessKey": {
+			"value": ""
+		},
+		"AzureBlobStorage1_connectionString": {
+			"value": ""
+		},
+		"AzureDataLakeStorage1_accountKey": {
+			"value": ""
+		},
+		"AzureDatabricks1_accessToken": {
+			"value": ""
+		},
+		"AzureMySql1_connectionString": {
+			"value": ""
+		},
+		"Hdfs1_password": {
+			"value": ""
+		},
+		"SharePointOnlineList1_servicePrincipalKey": {
+			"value": ""
+		},
+		"AzureBatch1_properties_typeProperties_batchUri": {
+			"value": "https://jessiebatch.chinanorth2.batch.chinacloudapi.cn"
+		},
+		"AzureBatch1_properties_typeProperties_poolName": {
+			"value": "custom-activity-pool  "
+		},
+		"AzureBatch1_properties_typeProperties_accountName": {
+			"value": "jessiebatch"
+		},
+		"AzureDataLakeStorage1_properties_typeProperties_url": {
+			"value": "https://adlsnorth2jessie.dfs.core.chinacloudapi.cn/"
+		},
+		"Hdfs1_properties_typeProperties_url": {
+			"value": "http://52.130.158.42:9870/webhdfs/v1/"
+		},
+		"Hdfs1_properties_typeProperties_userName": {
+			"value": "user"
+		},
+		"SharePointOnlineList1_properties_typeProperties_servicePrincipalId": {
+			"value": "371dfc71-2a41-40f4-995c-b11f4b244b7b"
+		}
+	}
+}

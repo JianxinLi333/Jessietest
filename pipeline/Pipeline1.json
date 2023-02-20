@@ -5,7 +5,14 @@
 			{
 				"name": "Copy data1",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Web1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -27,8 +34,8 @@
 					"source": {
 						"type": "BinarySource",
 						"storeSettings": {
-							"type": "HdfsReadSettings",
-							"recursive": true
+							"type": "HttpReadSettings",
+							"requestMethod": "GET"
 						},
 						"formatSettings": {
 							"type": "BinaryReadSettings"
@@ -44,7 +51,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "hdfs2",
+						"referenceName": "Binary1",
 						"type": "DatasetReference"
 					}
 				],
@@ -54,6 +61,27 @@
 						"type": "DatasetReference"
 					}
 				]
+			},
+			{
+				"name": "Web1",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://accounts.accesscontrol.chinacloudapi.cn/5691a5bf-29c0-43e2-b547-1377a4110078/tokens/OAuth/2",
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/x-www-form-urlencoded"
+					},
+					"body": "grant_type=client_credentials&client_id=371dfc71-2a41-40f4-995c-b11f4b244b7@5691a5bf-29c0-43e2-b547-1377a4110078&client_secret=qzb6vJanvV-sflBwcv5s..63o3fM4uw-zO&resource=00000003-0000-0ff1-ce00-000000000000/mcpbi.sharepoint.com@ 5691a5bf-29c0-43e2-b547-1377a4110078"
+				}
 			}
 		],
 		"annotations": [],

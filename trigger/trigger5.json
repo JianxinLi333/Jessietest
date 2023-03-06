@@ -1,0 +1,28 @@
+{
+	"name": "trigger5",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Month",
+				"interval": 3,
+				"startTime": "2023-03-01T16:00:00",
+				"timeZone": "China Standard Time",
+				"schedule": {
+					"minutes": [
+						0
+					],
+					"hours": [
+						10
+					],
+					"monthDays": [
+						1
+					]
+				}
+			}
+		}
+	}
+}

@@ -15,18 +15,18 @@
 		"typeProperties": {
 			"recurrence": {
 				"frequency": "Month",
-				"interval": 3,
+				"interval": 1,
 				"startTime": "2023-01-01T05:17:00",
 				"timeZone": "China Standard Time",
 				"schedule": {
 					"minutes": [
-						0
-					],
-					"hours": [
 						10
 					],
+					"hours": [
+						14
+					],
 					"monthDays": [
-						1
+						6
 					]
 				}
 			}

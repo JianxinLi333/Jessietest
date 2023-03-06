@@ -16,14 +16,14 @@
 			"recurrence": {
 				"frequency": "Month",
 				"interval": 1,
-				"startTime": "2023-01-01T05:17:00",
+				"startTime": "2023-03-06T15:34:00",
 				"timeZone": "China Standard Time",
 				"schedule": {
 					"minutes": [
-						45
+						35
 					],
 					"hours": [
-						14
+						15
 					],
 					"monthDays": [
 						6

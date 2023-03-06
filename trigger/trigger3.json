@@ -1,0 +1,25 @@
+{
+	"name": "trigger3",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Day",
+				"interval": 1,
+				"startTime": "2023-03-06T08:27:00Z",
+				"timeZone": "UTC",
+				"schedule": {
+					"minutes": [
+						31
+					],
+					"hours": [
+						8
+					]
+				}
+			}
+		}
+	}
+}

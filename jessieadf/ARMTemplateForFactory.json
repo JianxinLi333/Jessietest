@@ -1019,10 +1019,10 @@
 						"timeZone": "UTC",
 						"schedule": {
 							"minutes": [
-								40
+								10
 							],
 							"hours": [
-								9
+								10
 							],
 							"monthDays": [
 								7

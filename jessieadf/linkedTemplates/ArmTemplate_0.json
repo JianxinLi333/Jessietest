@@ -31,6 +31,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'servicePrincipalKey' of 'SharePointOnlineList1'"
 		},
+		"AzureBatch1_accessKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessKey' of 'AzureBatch1'"
+		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://adlsnorth2jessie.dfs.core.chinacloudapi.cn/"
@@ -46,6 +50,18 @@
 		"SharePointOnlineList1_properties_typeProperties_servicePrincipalId": {
 			"type": "string",
 			"defaultValue": "371dfc71-2a41-40f4-995c-b11f4b244b7b"
+		},
+		"AzureBatch1_properties_typeProperties_batchUri": {
+			"type": "string",
+			"defaultValue": "https://jessiebatchcn3.chinanorth3.batch.chinacloudapi.cn"
+		},
+		"AzureBatch1_properties_typeProperties_poolName": {
+			"type": "string",
+			"defaultValue": "pool1"
+		},
+		"AzureBatch1_properties_typeProperties_accountName": {
+			"type": "string",
+			"defaultValue": "jessiebatchcn3"
 		}
 	},
 	"variables": {
@@ -210,28 +226,6 @@
 						"type": "SecureString",
 						"value": "[parameters('SharePointOnlineList1_servicePrincipalKey')]"
 					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/trigger5')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Stopped",
-				"type": "TumblingWindowTrigger",
-				"typeProperties": {
-					"frequency": "Month",
-					"interval": 3,
-					"startTime": "2023-03-06T09:00:00Z",
-					"delay": "00:00:00",
-					"maxConcurrency": 5,
-					"retryPolicy": {
-						"intervalInSeconds": 30
-					},
-					"dependsOn": []
 				}
 			},
 			"dependsOn": []
@@ -625,6 +619,31 @@
 					"location": {
 						"type": "AzureBlobStorageLocation",
 						"container": "cdh-hadoop"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureBatch1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBatch",
+				"typeProperties": {
+					"batchUri": "[parameters('AzureBatch1_properties_typeProperties_batchUri')]",
+					"poolName": "[parameters('AzureBatch1_properties_typeProperties_poolName')]",
+					"accountName": "[parameters('AzureBatch1_properties_typeProperties_accountName')]",
+					"linkedServiceName": {
+						"referenceName": "AzureBlobStorage1",
+						"type": "LinkedServiceReference"
+					},
+					"accessKey": {
+						"type": "SecureString",
+						"value": "[parameters('AzureBatch1_accessKey')]"
 					}
 				}
 			},

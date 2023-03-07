@@ -120,6 +120,9 @@
 					"SharePointOnlineList1_servicePrincipalKey": {
 						"value": "[parameters('SharePointOnlineList1_servicePrincipalKey')]"
 					},
+					"AzureBatch1_accessKey": {
+						"value": "[parameters('AzureBatch1_accessKey')]"
+					},
 					"AzureDataLakeStorage1_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
 					},
@@ -131,6 +134,15 @@
 					},
 					"SharePointOnlineList1_properties_typeProperties_servicePrincipalId": {
 						"value": "[parameters('SharePointOnlineList1_properties_typeProperties_servicePrincipalId')]"
+					},
+					"AzureBatch1_properties_typeProperties_batchUri": {
+						"value": "[parameters('AzureBatch1_properties_typeProperties_batchUri')]"
+					},
+					"AzureBatch1_properties_typeProperties_poolName": {
+						"value": "[parameters('AzureBatch1_properties_typeProperties_poolName')]"
+					},
+					"AzureBatch1_properties_typeProperties_accountName": {
+						"value": "[parameters('AzureBatch1_properties_typeProperties_accountName')]"
 					}
 				}
 			},
@@ -150,20 +162,8 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
-					"AzureBatch1_accessKey": {
-						"value": "[parameters('AzureBatch1_accessKey')]"
-					},
 					"Hdfs1_password": {
 						"value": "[parameters('Hdfs1_password')]"
-					},
-					"AzureBatch1_properties_typeProperties_batchUri": {
-						"value": "[parameters('AzureBatch1_properties_typeProperties_batchUri')]"
-					},
-					"AzureBatch1_properties_typeProperties_poolName": {
-						"value": "[parameters('AzureBatch1_properties_typeProperties_poolName')]"
-					},
-					"AzureBatch1_properties_typeProperties_accountName": {
-						"value": "[parameters('AzureBatch1_properties_typeProperties_accountName')]"
 					},
 					"Hdfs1_properties_typeProperties_url": {
 						"value": "[parameters('Hdfs1_properties_typeProperties_url')]"

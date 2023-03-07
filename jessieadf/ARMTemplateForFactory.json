@@ -1039,28 +1039,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/trigger5')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Stopped",
-				"type": "TumblingWindowTrigger",
-				"typeProperties": {
-					"frequency": "Month",
-					"interval": 3,
-					"startTime": "2023-03-06T09:00:00Z",
-					"delay": "00:00:00",
-					"maxConcurrency": 5,
-					"retryPolicy": {
-						"intervalInSeconds": 30
-					},
-					"dependsOn": []
-				}
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/self-ir')]",
 			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
 			"apiVersion": "2018-06-01",

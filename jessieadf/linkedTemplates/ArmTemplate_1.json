@@ -107,14 +107,14 @@
 					"recurrence": {
 						"frequency": "Day",
 						"interval": 1,
-						"startTime": "2023-03-05T15:34:00",
+						"startTime": "2023-03-06T15:34:00",
 						"timeZone": "China Standard Time",
 						"schedule": {
 							"minutes": [
-								0
+								15
 							],
 							"hours": [
-								16
+								9
 							]
 						}
 					}
@@ -425,14 +425,14 @@
 					"recurrence": {
 						"frequency": "Day",
 						"interval": 1,
-						"startTime": "2023-03-06T08:26:00Z",
+						"startTime": "2023-03-07T08:26:00Z",
 						"timeZone": "UTC",
 						"schedule": {
 							"minutes": [
-								30
+								18
 							],
 							"hours": [
-								8
+								1
 							]
 						}
 					}

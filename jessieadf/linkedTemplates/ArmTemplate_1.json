@@ -489,7 +489,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"runtimeState": "Stopped",
+				"runtimeState": "Started",
 				"pipelines": [
 					{
 						"pipelineReference": {
@@ -502,10 +502,21 @@
 				"type": "ScheduleTrigger",
 				"typeProperties": {
 					"recurrence": {
-						"frequency": "Minute",
-						"interval": 15,
-						"startTime": "2023-03-07T08:30:00Z",
-						"timeZone": "UTC"
+						"frequency": "Month",
+						"interval": 3,
+						"startTime": "2023-01-01T08:30:00Z",
+						"timeZone": "UTC",
+						"schedule": {
+							"minutes": [
+								40
+							],
+							"hours": [
+								9
+							],
+							"monthDays": [
+								7
+							]
+						}
 					}
 				}
 			},

@@ -57,7 +57,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "blob2",
+						"referenceName": "Binary1",
 						"type": "DatasetReference"
 					}
 				]

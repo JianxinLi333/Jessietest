@@ -461,16 +461,19 @@
 				"type": "ScheduleTrigger",
 				"typeProperties": {
 					"recurrence": {
-						"frequency": "Day",
+						"frequency": "Month",
 						"interval": 1,
-						"startTime": "2023-03-06T08:27:00Z",
-						"timeZone": "UTC",
+						"startTime": "2023-03-06T08:27:00",
+						"timeZone": "China Standard Time",
 						"schedule": {
 							"minutes": [
-								31
+								30
 							],
 							"hours": [
-								8
+								9
+							],
+							"monthDays": [
+								7
 							]
 						}
 					}

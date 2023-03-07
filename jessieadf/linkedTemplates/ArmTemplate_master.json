@@ -27,6 +27,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureMySql1'"
 		},
+		"AzureSqlDatabase1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase1'"
+		},
 		"Hdfs1_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'Hdfs1'"
@@ -37,19 +41,23 @@
 		},
 		"AzureBatch1_properties_typeProperties_batchUri": {
 			"type": "string",
-			"defaultValue": "https://jessiebatch.chinanorth2.batch.chinacloudapi.cn"
+			"defaultValue": "https://jessiebatchcn3.chinanorth3.batch.chinacloudapi.cn"
 		},
 		"AzureBatch1_properties_typeProperties_poolName": {
 			"type": "string",
-			"defaultValue": "custom-activity-pool  "
+			"defaultValue": "pool1"
 		},
 		"AzureBatch1_properties_typeProperties_accountName": {
 			"type": "string",
-			"defaultValue": "jessiebatch"
+			"defaultValue": "jessiebatchcn3"
 		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://adlsnorth2jessie.dfs.core.chinacloudapi.cn/"
+		},
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://jessiekv.vault.azure.cn/"
 		},
 		"Hdfs1_properties_typeProperties_url": {
 			"type": "string",
@@ -58,6 +66,10 @@
 		"Hdfs1_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "user"
+		},
+		"HttpServer1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://mcpbi.sharepoint.cn/_api/web/GetFileByServerRelativeUrl('/Shared%20Documents/test.xlsx')/$value"
 		},
 		"SharePointOnlineList1_properties_typeProperties_servicePrincipalId": {
 			"type": "string",
@@ -102,35 +114,23 @@
 					"AzureMySql1_connectionString": {
 						"value": "[parameters('AzureMySql1_connectionString')]"
 					},
+					"AzureSqlDatabase1_connectionString": {
+						"value": "[parameters('AzureSqlDatabase1_connectionString')]"
+					},
 					"SharePointOnlineList1_servicePrincipalKey": {
 						"value": "[parameters('SharePointOnlineList1_servicePrincipalKey')]"
-					},
-					"AzureBatch1_accessKey": {
-						"value": "[parameters('AzureBatch1_accessKey')]"
-					},
-					"Hdfs1_password": {
-						"value": "[parameters('Hdfs1_password')]"
 					},
 					"AzureDataLakeStorage1_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
 					},
+					"AzureKeyVault1_properties_typeProperties_baseUrl": {
+						"value": "[parameters('AzureKeyVault1_properties_typeProperties_baseUrl')]"
+					},
+					"HttpServer1_properties_typeProperties_url": {
+						"value": "[parameters('HttpServer1_properties_typeProperties_url')]"
+					},
 					"SharePointOnlineList1_properties_typeProperties_servicePrincipalId": {
 						"value": "[parameters('SharePointOnlineList1_properties_typeProperties_servicePrincipalId')]"
-					},
-					"AzureBatch1_properties_typeProperties_batchUri": {
-						"value": "[parameters('AzureBatch1_properties_typeProperties_batchUri')]"
-					},
-					"AzureBatch1_properties_typeProperties_poolName": {
-						"value": "[parameters('AzureBatch1_properties_typeProperties_poolName')]"
-					},
-					"AzureBatch1_properties_typeProperties_accountName": {
-						"value": "[parameters('AzureBatch1_properties_typeProperties_accountName')]"
-					},
-					"Hdfs1_properties_typeProperties_url": {
-						"value": "[parameters('Hdfs1_properties_typeProperties_url')]"
-					},
-					"Hdfs1_properties_typeProperties_userName": {
-						"value": "[parameters('Hdfs1_properties_typeProperties_userName')]"
 					}
 				}
 			},
@@ -149,6 +149,27 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"AzureBatch1_accessKey": {
+						"value": "[parameters('AzureBatch1_accessKey')]"
+					},
+					"Hdfs1_password": {
+						"value": "[parameters('Hdfs1_password')]"
+					},
+					"AzureBatch1_properties_typeProperties_batchUri": {
+						"value": "[parameters('AzureBatch1_properties_typeProperties_batchUri')]"
+					},
+					"AzureBatch1_properties_typeProperties_poolName": {
+						"value": "[parameters('AzureBatch1_properties_typeProperties_poolName')]"
+					},
+					"AzureBatch1_properties_typeProperties_accountName": {
+						"value": "[parameters('AzureBatch1_properties_typeProperties_accountName')]"
+					},
+					"Hdfs1_properties_typeProperties_url": {
+						"value": "[parameters('Hdfs1_properties_typeProperties_url')]"
+					},
+					"Hdfs1_properties_typeProperties_userName": {
+						"value": "[parameters('Hdfs1_properties_typeProperties_userName')]"
 					}
 				}
 			},

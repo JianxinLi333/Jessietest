@@ -44,7 +44,10 @@
 				"outputs": [
 					{
 						"referenceName": "AzureMySqlTable1",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"tableName": "111"
+						}
 					}
 				]
 			}

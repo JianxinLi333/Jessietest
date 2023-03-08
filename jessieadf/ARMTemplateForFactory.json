@@ -122,6 +122,7 @@
 								}
 							},
 							"enableStaging": false,
+							"enableSkipIncompatibleRow": false,
 							"translator": {
 								"type": "TabularTranslator",
 								"typeConversion": true,
@@ -562,7 +563,7 @@
 						"container": "input"
 					},
 					"columnDelimiter": ",",
-					"escapeChar": "\\\\",
+					"escapeChar": "\\",
 					"firstRowAsHeader": true,
 					"quoteChar": "\\"
 				},

@@ -385,8 +385,9 @@
 						"container": "input"
 					},
 					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"quoteChar": "\""
+					"escapeChar": "\\\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\\"
 				},
 				"schema": [
 					{
@@ -428,8 +429,9 @@
 						"fileSystem": "input"
 					},
 					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"quoteChar": "\""
+					"escapeChar": "\\\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\\"
 				},
 				"schema": [
 					{

@@ -68,6 +68,20 @@
 						"typeProperties": {
 							"source": {
 								"type": "DelimitedTextSource",
+								"additionalColumns": [
+									{
+										"name": "aaa",
+										"value": "$$FILEPATH"
+									},
+									{
+										"name": "bbb",
+										"value": "$$FILEPATH"
+									},
+									{
+										"name": "ccc",
+										"value": "$$FILEPATH"
+									}
+								],
 								"storeSettings": {
 									"type": "AzureBlobFSReadSettings",
 									"recursive": true,

@@ -40,7 +40,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"on": {
-						"value": "0",
+						"value": "Case1",
 						"type": "Expression"
 					},
 					"cases": [

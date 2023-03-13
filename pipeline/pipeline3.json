@@ -17,13 +17,20 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
+						"sqlReaderQuery": "select count(*) ",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
 					"sink": {
-						"type": "AzureMySqlSink",
-						"writeBatchSize": 10000,
-						"writeBatchTimeout": "00:00:30"
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
 					},
 					"enableStaging": false,
 					"translator": {
@@ -43,15 +50,37 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "AzureMySqlTable1",
-						"type": "DatasetReference",
-						"parameters": {
-							"tableName": "111"
-						}
+						"referenceName": "DelimitedText1",
+						"type": "DatasetReference"
 					}
 				]
+			},
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Copy data1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "query",
+					"value": {
+						"value": "@string(activity('Copy data1').output.rowsRead)",
+						"type": "Expression"
+					}
+				}
 			}
 		],
+		"variables": {
+			"query": {
+				"type": "String"
+			}
+		},
 		"annotations": []
 	}
 }

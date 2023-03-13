@@ -227,6 +227,37 @@
 						"type": "DatasetReference"
 					}
 				}
+			},
+			{
+				"name": "Lookup8",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Switch1",
+						"dependencyConditions": [
+							"Skipped"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "AzureSqlTable1",
+						"type": "DatasetReference"
+					}
+				}
 			}
 		],
 		"folder": {

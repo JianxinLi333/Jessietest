@@ -79,7 +79,7 @@
 										{
 											"activity": "Lookup2",
 											"dependencyConditions": [
-												"Succeeded"
+												"Failed"
 											]
 										}
 									],
@@ -109,13 +109,13 @@
 				}
 			},
 			{
-				"name": "Lookup7",
+				"name": "Lookup4",
 				"type": "Lookup",
 				"dependsOn": [
 					{
 						"activity": "Switch1",
 						"dependencyConditions": [
-							"Failed"
+							"Completed"
 						]
 					}
 				],

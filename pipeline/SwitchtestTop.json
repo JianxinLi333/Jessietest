@@ -40,6 +40,10 @@
 				],
 				"userProperties": [],
 				"typeProperties": {
+					"pipeline": {
+						"referenceName": "SwitchtestChild",
+						"type": "PipelineReference"
+					},
 					"waitOnCompletion": true
 				}
 			}

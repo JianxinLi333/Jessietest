@@ -40,7 +40,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"on": {
-						"value": "@activity('Lookup1').output",
+						"value": "1",
 						"type": "Expression"
 					},
 					"cases": [

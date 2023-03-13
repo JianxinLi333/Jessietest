@@ -139,7 +139,7 @@
 								{
 									"activity": "Lookup4",
 									"dependencyConditions": [
-										"Succeeded"
+										"Failed"
 									]
 								}
 							],

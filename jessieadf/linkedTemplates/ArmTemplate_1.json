@@ -162,6 +162,11 @@
 					"elapsedTimeMetric": {},
 					"cancelAfter": {}
 				},
+				"variables": {
+					"query": {
+						"type": "String"
+					}
+				},
 				"folder": {
 					"name": "ForEach"
 				},
@@ -380,6 +385,11 @@
 					"elapsedTimeMetric": {},
 					"cancelAfter": {}
 				},
+				"variables": {
+					"query": {
+						"type": "String"
+					}
+				},
 				"folder": {
 					"name": "Switch"
 				},
@@ -485,13 +495,20 @@
 						"typeProperties": {
 							"source": {
 								"type": "AzureSqlSource",
+								"sqlReaderQuery": "select count(*) ",
 								"queryTimeout": "02:00:00",
 								"partitionOption": "None"
 							},
 							"sink": {
-								"type": "AzureMySqlSink",
-								"writeBatchSize": 10000,
-								"writeBatchTimeout": "00:00:30"
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobStorageWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
 							},
 							"enableStaging": false,
 							"translator": {
@@ -512,18 +529,41 @@
 						],
 						"outputs": [
 							{
-								"referenceName": "AzureMySqlTable1",
+								"referenceName": "DelimitedText1",
 								"type": "DatasetReference",
-								"parameters": {
-									"tableName": "111"
-								}
+								"parameters": {}
 							}
 						]
+					},
+					{
+						"name": "Set variable1",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "Copy data1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "query",
+							"value": {
+								"value": "@string(activity('Copy data1').output.rowsRead)",
+								"type": "Expression"
+							}
+						}
 					}
 				],
 				"policy": {
 					"elapsedTimeMetric": {},
 					"cancelAfter": {}
+				},
+				"variables": {
+					"query": {
+						"type": "String"
+					}
 				},
 				"annotations": []
 			},
@@ -768,6 +808,11 @@
 					"elapsedTimeMetric": {},
 					"cancelAfter": {}
 				},
+				"variables": {
+					"query": {
+						"type": "String"
+					}
+				},
 				"folder": {
 					"name": "Switch"
 				},
@@ -834,6 +879,11 @@
 				"policy": {
 					"elapsedTimeMetric": {},
 					"cancelAfter": {}
+				},
+				"variables": {
+					"query": {
+						"type": "String"
+					}
 				},
 				"folder": {
 					"name": "ForEach"

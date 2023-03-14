@@ -41,7 +41,26 @@
 				"typeProperties": {
 					"variableName": "Count",
 					"value": {
-						"value": "@string(activity('Lookup1').output)",
+						"value": "@string(activity('Lookup1').output.firstRow.count)",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Wait1",
+				"type": "Wait",
+				"dependsOn": [
+					{
+						"activity": "Set variable1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"waitTimeInSeconds": {
+						"value": "@variables('Count')",
 						"type": "Expression"
 					}
 				}

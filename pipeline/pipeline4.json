@@ -16,20 +16,42 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "ParquetSource",
-						"storeSettings": {
-							"type": "AzureBlobFSReadSettings",
-							"recursive": true,
-							"enablePartitionDiscovery": false
-						}
+						"type": "AzurePostgreSqlSource",
+						"query": "select count(*) from information_schema.collations",
+						"partitionOption": "None"
 					},
 					"dataset": {
-						"referenceName": "Parquet2",
+						"referenceName": "AzurePostgreSqlTable1",
 						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Lookup1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "Count",
+					"value": {
+						"value": "@string(activity('Lookup1').output)",
+						"type": "Expression"
 					}
 				}
 			}
 		],
+		"variables": {
+			"Count": {
+				"type": "String"
+			}
+		},
 		"annotations": []
 	}
 }

@@ -1,0 +1,25 @@
+{
+	"name": "SQLDW2MySQLtest3",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SQLDW",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [
+			{
+				"name": "a_event",
+				"type": "nvarchar"
+			},
+			{
+				"name": "a_date",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "EVENTS_QPI_test_column"
+		}
+	}
+}

@@ -122,7 +122,7 @@
 						"type": "AzureMySqlSink",
 						"writeBatchSize": 10000,
 						"writeBatchTimeout": "00:00:30",
-						"preCopyScript": "truncate table t1"
+						"preCopyScript": "truncate table EVENTS_QPI_test_column"
 					},
 					"enableStaging": false,
 					"parallelCopies": 1,
@@ -138,13 +138,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "SQLWD2MySQLtest1",
+						"referenceName": "SQLDW2MySQLtest3",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "AzureMySqlTable1",
+						"referenceName": "AzureMySqlTable3",
 						"type": "DatasetReference"
 					}
 				]

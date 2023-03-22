@@ -16,9 +16,12 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "SqlDWSource",
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
+						"type": "ParquetSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						}
 					},
 					"sink": {
 						"type": "AzureMySqlSink",
@@ -40,8 +43,19 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "SQLWD2MySQLtest1",
-						"type": "DatasetReference"
+						"referenceName": "Parquet1",
+						"type": "DatasetReference",
+						"parameters": {
+							"filePath": {
+								"value": "@pipeline().parameters.path",
+								"type": "Expression"
+							},
+							"containerName": {
+								"value": "@pipeline().parameters.container",
+								"type": "Expression"
+							},
+							"fileName": "t1"
+						}
 					}
 				],
 				"outputs": [
@@ -68,9 +82,12 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "SqlDWSource",
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
+						"type": "ParquetSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						}
 					},
 					"sink": {
 						"type": "AzureMySqlSink",
@@ -92,8 +109,19 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "SQLDW2MySQltest2",
-						"type": "DatasetReference"
+						"referenceName": "Parquet1",
+						"type": "DatasetReference",
+						"parameters": {
+							"filePath": {
+								"value": "@pipeline().parameters.path",
+								"type": "Expression"
+							},
+							"containerName": {
+								"value": "@pipeline().parameters.container",
+								"type": "Expression"
+							},
+							"fileName": "t2"
+						}
 					}
 				],
 				"outputs": [
@@ -120,9 +148,12 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "SqlDWSource",
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
+						"type": "ParquetSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						}
 					},
 					"sink": {
 						"type": "AzureMySqlSink",
@@ -144,8 +175,19 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "SQLDW2MySQLtest3",
-						"type": "DatasetReference"
+						"referenceName": "Parquet1",
+						"type": "DatasetReference",
+						"parameters": {
+							"filePath": {
+								"value": "@pipeline().parameters.path",
+								"type": "Expression"
+							},
+							"containerName": {
+								"value": "@pipeline().parameters.container",
+								"type": "Expression"
+							},
+							"fileName": "EVENTS_QPI_test_column"
+						}
 					}
 				],
 				"outputs": [
@@ -159,6 +201,14 @@
 				]
 			}
 		],
+		"parameters": {
+			"container": {
+				"type": "string"
+			},
+			"path": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"lastPublishTime": "2022-07-13T06:02:23Z"
 	},

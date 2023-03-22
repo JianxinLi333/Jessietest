@@ -41,7 +41,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "SQLWD2MySQLtest1",
+						"referenceName": "SQLDW2MySQLtest3",
 						"type": "DatasetReference"
 					}
 				],
@@ -52,7 +52,7 @@
 						"parameters": {
 							"filePath": "DW",
 							"containerName": "output",
-							"fileName": "t1"
+							"fileName": "EVENTS_QPI_test_column"
 						}
 					}
 				]

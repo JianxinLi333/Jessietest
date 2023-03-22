@@ -23,7 +23,8 @@
 					"sink": {
 						"type": "AzureMySqlSink",
 						"writeBatchSize": 10000,
-						"writeBatchTimeout": "00:00:30"
+						"writeBatchTimeout": "00:00:30",
+						"preCopyScript": "truncate table t1"
 					},
 					"enableStaging": false,
 					"parallelCopies": 1,

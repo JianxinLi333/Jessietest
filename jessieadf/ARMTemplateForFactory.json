@@ -96,9 +96,12 @@
 						"userProperties": [],
 						"typeProperties": {
 							"source": {
-								"type": "SqlDWSource",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
+								"type": "ParquetSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								}
 							},
 							"sink": {
 								"type": "AzureMySqlSink",
@@ -120,16 +123,28 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "SQLWD2MySQLtest1",
+								"referenceName": "Parquet1",
 								"type": "DatasetReference",
-								"parameters": {}
+								"parameters": {
+									"filePath": {
+										"value": "@pipeline().parameters.path",
+										"type": "Expression"
+									},
+									"containerName": {
+										"value": "@pipeline().parameters.container",
+										"type": "Expression"
+									},
+									"fileName": "t1"
+								}
 							}
 						],
 						"outputs": [
 							{
-								"referenceName": "AzureMySqlTable1",
+								"referenceName": "AzureMySqlTable4",
 								"type": "DatasetReference",
-								"parameters": {}
+								"parameters": {
+									"tablename": "t1"
+								}
 							}
 						]
 					},
@@ -147,9 +162,12 @@
 						"userProperties": [],
 						"typeProperties": {
 							"source": {
-								"type": "SqlDWSource",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
+								"type": "ParquetSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								}
 							},
 							"sink": {
 								"type": "AzureMySqlSink",
@@ -171,16 +189,28 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "SQLDW2MySQltest2",
+								"referenceName": "Parquet1",
 								"type": "DatasetReference",
-								"parameters": {}
+								"parameters": {
+									"filePath": {
+										"value": "@pipeline().parameters.path",
+										"type": "Expression"
+									},
+									"containerName": {
+										"value": "@pipeline().parameters.container",
+										"type": "Expression"
+									},
+									"fileName": "t2"
+								}
 							}
 						],
 						"outputs": [
 							{
-								"referenceName": "AzureMySqlTable2",
+								"referenceName": "AzureMySqlTable4",
 								"type": "DatasetReference",
-								"parameters": {}
+								"parameters": {
+									"tablename": "t2"
+								}
 							}
 						]
 					},
@@ -198,9 +228,12 @@
 						"userProperties": [],
 						"typeProperties": {
 							"source": {
-								"type": "SqlDWSource",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
+								"type": "ParquetSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								}
 							},
 							"sink": {
 								"type": "AzureMySqlSink",
@@ -222,16 +255,28 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "SQLDW2MySQLtest3",
+								"referenceName": "Parquet1",
 								"type": "DatasetReference",
-								"parameters": {}
+								"parameters": {
+									"filePath": {
+										"value": "@pipeline().parameters.path",
+										"type": "Expression"
+									},
+									"containerName": {
+										"value": "@pipeline().parameters.container",
+										"type": "Expression"
+									},
+									"fileName": "EVENTS_QPI_test_column"
+								}
 							}
 						],
 						"outputs": [
 							{
-								"referenceName": "AzureMySqlTable3",
+								"referenceName": "AzureMySqlTable4",
 								"type": "DatasetReference",
-								"parameters": {}
+								"parameters": {
+									"tablename": "EVENTS_QPI_test_column"
+								}
 							}
 						]
 					},
@@ -273,7 +318,7 @@
 						"typeProperties": {
 							"scripts": [
 								{
-									"type": "Query",
+									"type": "NonQuery",
 									"text": "select 1"
 								}
 							],
@@ -285,16 +330,22 @@
 					"elapsedTimeMetric": {},
 					"cancelAfter": {}
 				},
+				"parameters": {
+					"container": {
+						"type": "string",
+						"defaultValue": "output"
+					},
+					"path": {
+						"type": "string",
+						"defaultValue": "DW"
+					}
+				},
 				"annotations": [],
 				"lastPublishTime": "2022-07-13T06:02:23Z"
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/SQLWD2MySQLtest1')]",
-				"[concat(variables('factoryId'), '/datasets/AzureMySqlTable1')]",
-				"[concat(variables('factoryId'), '/datasets/SQLDW2MySQltest2')]",
-				"[concat(variables('factoryId'), '/datasets/AzureMySqlTable2')]",
-				"[concat(variables('factoryId'), '/datasets/SQLDW2MySQLtest3')]",
-				"[concat(variables('factoryId'), '/datasets/AzureMySqlTable3')]",
+				"[concat(variables('factoryId'), '/datasets/Parquet1')]",
+				"[concat(variables('factoryId'), '/datasets/AzureMySqlTable4')]",
 				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
 			]
 		},
@@ -816,7 +867,10 @@
 							"value": "@dataset().filePath",
 							"type": "Expression"
 						},
-						"fileSystem": "output"
+						"fileSystem": {
+							"value": "@dataset().containerName",
+							"type": "Expression"
+						}
 					},
 					"compressionCodec": "gzip"
 				},
@@ -1994,29 +2048,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/hdfs2')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Hdfs1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Binary",
-				"typeProperties": {
-					"location": {
-						"type": "HdfsLocation",
-						"fileName": "blob2.json",
-						"folderPath": "111"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/Hdfs1')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/AzureBatch1')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -2460,6 +2491,108 @@
 			"apiVersion": "2018-06-01",
 			"properties": {},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureMySqlTable4')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureMySql",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"tablename": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "AzureMySqlTable",
+				"schema": [],
+				"typeProperties": {
+					"tableName": {
+						"value": "@dataset().tablename",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureMySql')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline2')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlDWSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "ParquetWriteSettings"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SQLDW2MySQLtest3",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Parquet1",
+								"type": "DatasetReference",
+								"parameters": {
+									"filePath": "DW",
+									"containerName": "output",
+									"fileName": "EVENTS_QPI_test_column"
+								}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SQLDW2MySQLtest3')]",
+				"[concat(variables('factoryId'), '/datasets/Parquet1')]"
+			]
 		}
 	]
 }

@@ -1,0 +1,23 @@
+{
+	"name": "AzureMySqlTable4",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureMySql",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"tablename": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "AzureMySqlTable",
+		"schema": [],
+		"typeProperties": {
+			"tableName": {
+				"value": "@dataset().tablename",
+				"type": "Expression"
+			}
+		}
+	}
+}

@@ -46,8 +46,11 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "AzureMySqlTable1",
-						"type": "DatasetReference"
+						"referenceName": "AzureMySqlTable4",
+						"type": "DatasetReference",
+						"parameters": {
+							"tablename": "t1"
+						}
 					}
 				]
 			},
@@ -95,8 +98,11 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "AzureMySqlTable2",
-						"type": "DatasetReference"
+						"referenceName": "AzureMySqlTable4",
+						"type": "DatasetReference",
+						"parameters": {
+							"tablename": "t2"
+						}
 					}
 				]
 			},
@@ -144,55 +150,13 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "AzureMySqlTable3",
-						"type": "DatasetReference"
+						"referenceName": "AzureMySqlTable4",
+						"type": "DatasetReference",
+						"parameters": {
+							"tablename": "EVENTS_QPI_test_column"
+						}
 					}
 				]
-			},
-			{
-				"name": "Script1",
-				"type": "Script",
-				"dependsOn": [
-					{
-						"activity": "Copy data1",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					},
-					{
-						"activity": "Copy data1_copy1",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					},
-					{
-						"activity": "Copy data1_copy2",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase1",
-					"type": "LinkedServiceReference"
-				},
-				"typeProperties": {
-					"scripts": [
-						{
-							"type": "Query",
-							"text": "select 1"
-						}
-					],
-					"scriptBlockExecutionTimeout": "02:00:00"
-				}
 			}
 		],
 		"annotations": [],

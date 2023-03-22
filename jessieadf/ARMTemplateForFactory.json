@@ -19,13 +19,17 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage1'"
 		},
-		"AzureDatabricks1_accessToken": {
+		"AzureMySql_connectionString": {
 			"type": "secureString",
-			"metadata": "Secure string for 'accessToken' of 'AzureDatabricks1'"
+			"metadata": "Secure string for 'connectionString' of 'AzureMySql'"
 		},
 		"AzureMySql1_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureMySql1'"
+		},
+		"AzurePostgreSql1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzurePostgreSql1'"
 		},
 		"AzureSqlDatabase1_connectionString": {
 			"type": "secureString",
@@ -35,9 +39,9 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'Hdfs1'"
 		},
-		"SharePointOnlineList1_servicePrincipalKey": {
+		"SQLDW_connectionString": {
 			"type": "secureString",
-			"metadata": "Secure string for 'servicePrincipalKey' of 'SharePointOnlineList1'"
+			"metadata": "Secure string for 'connectionString' of 'SQLDW'"
 		},
 		"AzureBatch1_properties_typeProperties_batchUri": {
 			"type": "string",
@@ -55,10 +59,6 @@
 			"type": "string",
 			"defaultValue": "https://adlsnorth2jessie.dfs.core.chinacloudapi.cn/"
 		},
-		"AzureKeyVault1_properties_typeProperties_baseUrl": {
-			"type": "string",
-			"defaultValue": "https://jessiekv.vault.azure.cn/"
-		},
 		"Hdfs1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "http://52.130.158.42:9870/webhdfs/v1/"
@@ -70,145 +70,12 @@
 		"HttpServer1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://mcpbi.sharepoint.cn/_api/web/GetFileByServerRelativeUrl('/Shared%20Documents/test.xlsx')/$value"
-		},
-		"SharePointOnlineList1_properties_typeProperties_servicePrincipalId": {
-			"type": "string",
-			"defaultValue": "371dfc71-2a41-40f4-995c-b11f4b244b7b"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
-		{
-			"name": "[concat(parameters('factoryName'), '/Child')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Lookup1",
-						"type": "Lookup",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"dataset": {
-								"referenceName": "AzureSqlTable1",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						}
-					},
-					{
-						"name": "ForEach1",
-						"type": "ForEach",
-						"dependsOn": [
-							{
-								"activity": "Lookup1",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"items": {
-								"value": "@createArray('a','b','c')",
-								"type": "Expression"
-							},
-							"activities": [
-								{
-									"name": "Lookup8",
-									"type": "Lookup",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "0.12:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"source": {
-											"type": "AzureSqlSource",
-											"sqlReaderQuery": "select * from test",
-											"queryTimeout": "02:00:00",
-											"partitionOption": "None"
-										},
-										"dataset": {
-											"referenceName": "AzureSqlTable1",
-											"type": "DatasetReference",
-											"parameters": {}
-										}
-									}
-								},
-								{
-									"name": "Lookup9",
-									"type": "Lookup",
-									"dependsOn": [
-										{
-											"activity": "Lookup8",
-											"dependencyConditions": [
-												"Failed"
-											]
-										}
-									],
-									"policy": {
-										"timeout": "0.12:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"source": {
-											"type": "AzureSqlSource",
-											"queryTimeout": "02:00:00",
-											"partitionOption": "None"
-										},
-										"dataset": {
-											"referenceName": "AzureSqlTable1",
-											"type": "DatasetReference",
-											"parameters": {}
-										}
-									}
-								}
-							]
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"variables": {
-					"query": {
-						"type": "String"
-					}
-				},
-				"folder": {
-					"name": "ForEach"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/AzureSqlTable1')]"
-			]
-		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Pipeline1')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
@@ -229,42 +96,18 @@
 						"userProperties": [],
 						"typeProperties": {
 							"source": {
-								"type": "DelimitedTextSource",
-								"additionalColumns": [
-									{
-										"name": "aaa",
-										"value": "$$FILEPATH"
-									},
-									{
-										"name": "bbb",
-										"value": "$$FILEPATH"
-									},
-									{
-										"name": "ccc",
-										"value": "$$FILEPATH"
-									}
-								],
-								"storeSettings": {
-									"type": "AzureBlobFSReadSettings",
-									"recursive": true,
-									"enablePartitionDiscovery": false
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings"
-								}
+								"type": "SqlDWSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
 							},
 							"sink": {
-								"type": "DelimitedTextSink",
-								"storeSettings": {
-									"type": "AzureBlobStorageWriteSettings"
-								},
-								"formatSettings": {
-									"type": "DelimitedTextWriteSettings",
-									"quoteAllText": true,
-									"fileExtension": ".txt"
-								}
+								"type": "AzureMySqlSink",
+								"writeBatchSize": 10000,
+								"writeBatchTimeout": "00:00:30",
+								"preCopyScript": "truncate table t1"
 							},
 							"enableStaging": false,
+							"parallelCopies": 1,
 							"enableSkipIncompatibleRow": false,
 							"translator": {
 								"type": "TabularTranslator",
@@ -277,18 +120,165 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "DelimitedText2",
+								"referenceName": "SQLWD2MySQLtest1",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
 						],
 						"outputs": [
 							{
-								"referenceName": "DelimitedText1",
+								"referenceName": "AzureMySqlTable1",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
 						]
+					},
+					{
+						"name": "Copy data1_copy1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlDWSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureMySqlSink",
+								"writeBatchSize": 10000,
+								"writeBatchTimeout": "00:00:30",
+								"preCopyScript": "truncate table t2"
+							},
+							"enableStaging": false,
+							"parallelCopies": 1,
+							"enableSkipIncompatibleRow": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SQLDW2MySQltest2",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "AzureMySqlTable2",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Copy data1_copy2",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlDWSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureMySqlSink",
+								"writeBatchSize": 10000,
+								"writeBatchTimeout": "00:00:30",
+								"preCopyScript": "truncate table EVENTS_QPI_test_column"
+							},
+							"enableStaging": false,
+							"parallelCopies": 1,
+							"enableSkipIncompatibleRow": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SQLDW2MySQLtest3",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "AzureMySqlTable3",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Script1",
+						"type": "Script",
+						"dependsOn": [
+							{
+								"activity": "Copy data1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "Copy data1_copy1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "Copy data1_copy2",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase1",
+							"type": "LinkedServiceReference"
+						},
+						"typeProperties": {
+							"scripts": [
+								{
+									"type": "Query",
+									"text": "select 1"
+								}
+							],
+							"scriptBlockExecutionTimeout": "02:00:00"
+						}
 					}
 				],
 				"policy": {
@@ -299,379 +289,24 @@
 				"lastPublishTime": "2022-07-13T06:02:23Z"
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/DelimitedText2')]",
-				"[concat(variables('factoryId'), '/datasets/DelimitedText1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SwitchtestChild')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Lookup1",
-						"type": "Lookup",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"dataset": {
-								"referenceName": "AzureSqlTable1",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						}
-					},
-					{
-						"name": "Switch1",
-						"type": "Switch",
-						"dependsOn": [
-							{
-								"activity": "Lookup1",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"on": {
-								"value": "Case1",
-								"type": "Expression"
-							},
-							"cases": [
-								{
-									"value": "Case1",
-									"activities": [
-										{
-											"name": "Lookup2",
-											"type": "Lookup",
-											"dependsOn": [],
-											"policy": {
-												"timeout": "0.12:00:00",
-												"retry": 0,
-												"retryIntervalInSeconds": 30,
-												"secureOutput": false,
-												"secureInput": false
-											},
-											"userProperties": [],
-											"typeProperties": {
-												"source": {
-													"type": "AzureSqlSource",
-													"sqlReaderQuery": "select * from test",
-													"queryTimeout": "02:00:00",
-													"partitionOption": "None"
-												},
-												"dataset": {
-													"referenceName": "AzureSqlTable1",
-													"type": "DatasetReference",
-													"parameters": {}
-												}
-											}
-										},
-										{
-											"name": "Lookup3",
-											"type": "Lookup",
-											"dependsOn": [
-												{
-													"activity": "Lookup2",
-													"dependencyConditions": [
-														"Failed"
-													]
-												}
-											],
-											"policy": {
-												"timeout": "0.12:00:00",
-												"retry": 0,
-												"retryIntervalInSeconds": 30,
-												"secureOutput": false,
-												"secureInput": false
-											},
-											"userProperties": [],
-											"typeProperties": {
-												"source": {
-													"type": "AzureSqlSource",
-													"queryTimeout": "02:00:00",
-													"partitionOption": "None"
-												},
-												"dataset": {
-													"referenceName": "AzureSqlTable1",
-													"type": "DatasetReference",
-													"parameters": {}
-												}
-											}
-										}
-									]
-								}
-							]
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"variables": {
-					"query": {
-						"type": "String"
-					}
-				},
-				"folder": {
-					"name": "Switch"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/AzureSqlTable1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SwitchtestTop')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Lookup1",
-						"type": "Lookup",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"sqlReaderQuery": "select * from dbo.brand",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"dataset": {
-								"referenceName": "AzureSqlTable1",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						}
-					},
-					{
-						"name": "Execute Pipeline1",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "Lookup1",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "SwitchtestChild",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"variables": {
-					"query": {
-						"type": "String"
-					}
-				},
-				"folder": {
-					"name": "Switch"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/AzureSqlTable1')]",
-				"[concat(variables('factoryId'), '/pipelines/SwitchtestChild')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Top')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Lookup1",
-						"type": "Lookup",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"sqlReaderQuery": "select * from dbo.brand",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"dataset": {
-								"referenceName": "AzureSqlTable1",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						}
-					},
-					{
-						"name": "Execute Pipeline1",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "Lookup1",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "Child",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"variables": {
-					"query": {
-						"type": "String"
-					}
-				},
-				"folder": {
-					"name": "ForEach"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/AzureSqlTable1')]",
-				"[concat(variables('factoryId'), '/pipelines/Child')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/pipeline2')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Copy data1",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureMySqlSource",
-								"query": "select * from testT",
-								"queryTimeout": "02:00:00"
-							},
-							"sink": {
-								"type": "ParquetSink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings"
-								},
-								"formatSettings": {
-									"type": "ParquetWriteSettings"
-								}
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "AzureMySqlTable1",
-								"type": "DatasetReference",
-								"parameters": {
-									"tableName": "testT"
-								}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "Parquet1",
-								"type": "DatasetReference",
-								"parameters": {
-									"filePath": "test0210",
-									"containerName": "output",
-									"fileName": "testT"
-								}
-							}
-						]
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"folder": {
-					"name": "folder1"
-				},
-				"annotations": [],
-				"lastPublishTime": "2023-02-10T05:12:41Z"
-			},
-			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SQLWD2MySQLtest1')]",
 				"[concat(variables('factoryId'), '/datasets/AzureMySqlTable1')]",
-				"[concat(variables('factoryId'), '/datasets/Parquet1')]"
+				"[concat(variables('factoryId'), '/datasets/SQLDW2MySQltest2')]",
+				"[concat(variables('factoryId'), '/datasets/AzureMySqlTable2')]",
+				"[concat(variables('factoryId'), '/datasets/SQLDW2MySQLtest3')]",
+				"[concat(variables('factoryId'), '/datasets/AzureMySqlTable3')]",
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/pipeline3')]",
+			"name": "[concat(parameters('factoryName'), '/VariablesTest')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "Copy data1",
-						"type": "Copy",
+						"name": "Lookup1",
+						"type": "Lookup",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "0.12:00:00",
@@ -683,53 +318,23 @@
 						"userProperties": [],
 						"typeProperties": {
 							"source": {
-								"type": "AzureSqlSource",
-								"sqlReaderQuery": "select count(*) ",
-								"queryTimeout": "02:00:00",
+								"type": "AzurePostgreSqlSource",
+								"query": "select count(*) from information_schema.collations",
 								"partitionOption": "None"
 							},
-							"sink": {
-								"type": "DelimitedTextSink",
-								"storeSettings": {
-									"type": "AzureBlobStorageWriteSettings"
-								},
-								"formatSettings": {
-									"type": "DelimitedTextWriteSettings",
-									"quoteAllText": true,
-									"fileExtension": ".txt"
-								}
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "AzureSqlTable1",
+							"dataset": {
+								"referenceName": "AzurePostgreSqlTable1",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
-						],
-						"outputs": [
-							{
-								"referenceName": "DelimitedText1",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
+						}
 					},
 					{
 						"name": "Set variable1",
 						"type": "SetVariable",
 						"dependsOn": [
 							{
-								"activity": "Copy data1",
+								"activity": "Lookup1",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -737,9 +342,28 @@
 						],
 						"userProperties": [],
 						"typeProperties": {
-							"variableName": "query",
+							"variableName": "Count",
 							"value": {
-								"value": "@string(activity('Copy data1').output.rowsRead)",
+								"value": "@string(activity('Lookup1').output.firstRow.count)",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "Wait1",
+						"type": "Wait",
+						"dependsOn": [
+							{
+								"activity": "Set variable1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"waitTimeInSeconds": {
+								"value": "@variables('Count')",
 								"type": "Expression"
 							}
 						}
@@ -750,60 +374,14 @@
 					"cancelAfter": {}
 				},
 				"variables": {
-					"query": {
+					"Count": {
 						"type": "String"
 					}
 				},
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/AzureSqlTable1')]",
-				"[concat(variables('factoryId'), '/datasets/DelimitedText1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/pipeline4')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Lookup1",
-						"type": "Lookup",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "ParquetSource",
-								"storeSettings": {
-									"type": "AzureBlobFSReadSettings",
-									"recursive": true,
-									"enablePartitionDiscovery": false
-								}
-							},
-							"dataset": {
-								"referenceName": "Parquet2",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/Parquet2')]"
+				"[concat(variables('factoryId'), '/datasets/AzurePostgreSqlTable1')]"
 			]
 		},
 		{
@@ -859,13 +437,8 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "AzureMySql1",
+					"referenceName": "AzureMySql",
 					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"tableName": {
-						"type": "string"
-					}
 				},
 				"folder": {
 					"name": "folder1"
@@ -895,14 +468,135 @@
 					}
 				],
 				"typeProperties": {
-					"tableName": {
-						"value": "@dataset().tableName",
-						"type": "Expression"
-					}
+					"tableName": "`t1`"
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureMySql1')]"
+				"[concat(variables('factoryId'), '/linkedServices/AzureMySql')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureMySqlTable2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureMySql",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureMySqlTable",
+				"schema": [
+					{
+						"name": "id",
+						"precision": 10,
+						"scale": 0
+					},
+					{
+						"name": "fruit",
+						"precision": 23,
+						"scale": 0
+					}
+				],
+				"typeProperties": {
+					"tableName": "`t2`"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureMySql')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureMySqlTable3')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureMySql",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureMySqlTable",
+				"schema": [
+					{
+						"name": "a_event",
+						"precision": 220,
+						"scale": 0
+					},
+					{
+						"name": "a_date",
+						"precision": 220,
+						"scale": 0
+					}
+				],
+				"typeProperties": {
+					"tableName": "`events_qpi_test_column`"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureMySql')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzurePostgreSqlTable1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzurePostgreSql1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzurePostgreSqlTable",
+				"schema": [
+					{
+						"name": "jobid",
+						"precision": 19,
+						"scale": 0
+					},
+					{
+						"name": "schedule",
+						"scale": 0
+					},
+					{
+						"name": "command",
+						"scale": 0
+					},
+					{
+						"name": "nodename",
+						"scale": 0
+					},
+					{
+						"name": "nodeport",
+						"precision": 10,
+						"scale": 0
+					},
+					{
+						"name": "database",
+						"scale": 0
+					},
+					{
+						"name": "username",
+						"scale": 0
+					},
+					{
+						"name": "active",
+						"precision": 1,
+						"scale": 0
+					},
+					{
+						"name": "jobname",
+						"precision": 64,
+						"scale": 0
+					}
+				],
+				"typeProperties": {
+					"schema": "information_schema",
+					"table": "collations"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzurePostgreSql1')]"
 			]
 		},
 		{
@@ -1235,6 +929,1049 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/SQLDW2MySQLtest3')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SQLDW",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlDWTable",
+				"schema": [
+					{
+						"name": "a_event",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_date",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "EVENTS_QPI_test_column"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/SQLDW')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SQLDW2MySQltest2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SQLDW",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlDWTable",
+				"schema": [
+					{
+						"name": "id",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "fruit",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "t2"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/SQLDW')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SQLWD2MySQLtest1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SQLDW",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlDWTable",
+				"schema": [
+					{
+						"name": "a_event",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_user_id",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_distinct_id",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_date",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_time",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_device_id",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_os_version",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_os",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_screen_height",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_is_first_day",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_lib",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_model",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_screen_width",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_network_type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_appname",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_manufacturer",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_app_version",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_wifi",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_lib_version",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_is_first_time",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_resume_from_background",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_ip",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_is_login_id",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_city",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_province",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_country",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_screen_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_title",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_element_content",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_element_type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_element_position",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_carrier",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_latest_referrer",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_latest_traffic_source_type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_latest_search_keyword",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_referrer",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_url",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_url_path",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_browser",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_browser_version",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_viewport_position",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_viewport_height",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_viewport_width",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_event_duration",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_latest_referrer_host",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_referrer_host",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_element_class_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_element_target_url",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_element_selector",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_content_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_button_function",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_bill_amount",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_bill_month",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_track_signup_original_id",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_order_id",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_charge_amount",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_platform_type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_community_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_element_id",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_is_overdued",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_last_referrer",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_property_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_app_crashed_reason",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_bill_type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_coupon_amount",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_has_coupon",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_button_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_page_title",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_prepaid_months",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_last_button",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_failure_reason",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_is_success",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_payment_method",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_identity",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_property_address",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_request_id",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_nickname",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_login_type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_internet_type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_error_message",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_failure_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_interface_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_failurereason",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_short_url_key",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_short_url_target",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_utm_campaign",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_utm_content",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_utm_medium",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_utm_source",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_utm_term",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_process_duration",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_request_scene",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_authorize_id",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_submit_item",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_app_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_app_state",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_appclick",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_appstart",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_platform",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_item_price",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_payment_type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_property_type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_quest_id",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_element_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_mac_addr",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_etl_date",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_source_system",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_kafka_offset",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_position",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_job_rank",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_ou_1",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_ou_2",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_ou_3",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_department",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_department_id",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_ou_1_id",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_ou_2_id",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_ou_3_id",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_is_department_leader",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_device_type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_instance_id",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_workflow_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_workflow_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_instance_state",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_workflow_version",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_activity_id",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_activity_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_token_id",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_workitem_id",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_comment_type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_failure_params",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_utm_matching_type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_matched_key",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_latest_utm_campaign",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_latest_utm_source",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_latest_utm_medium",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_latest_utm_term",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_latest_utm_content",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_url_host",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_offline_pkg_version",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_function_moudule",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_trade_category",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_order_type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_order_module",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_door_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_is_need_invoice",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_order_notes",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_order_amount",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_actual_pay_amount",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_date_date",
+						"type": "date"
+					},
+					{
+						"name": "a_from",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_merchant_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_product_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_product_type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_bill_list_type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_activity_form",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_activity_type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_activity_title",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_number_of_product_sku",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_property_community",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_content_type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_has_picture",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_has_text",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_has_result",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_key_wodrs",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_channel_active_result",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_channel_attribute_period_hour",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_channel_active_period_day",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_channel_click_id",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_channel_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_phonenumber",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_content",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_res",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_file_path",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_result_data",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_failrue_reason",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_has_type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_type_report",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_language_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_app_id",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_timezone_offset",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_idmap_reason",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_element_path",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_share_source",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_receive_time",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_bot_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_userphone",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_latest_scene",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_username",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_share_depth",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_channel_type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_url_query",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_room_type_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_function_module",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_wx_version",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_phones_ystem",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_login_time",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_scene",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_checkouttime",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_has_display",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_checkintime",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_checkinout_time",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_is_submit",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_room_price_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_phone_number",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_number_of_room",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_product_number",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_product_sku",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_product_staydays",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_goodsname",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_latest_share_url_path",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_share_url_path",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_latest_share_distinct_id",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_latest_share_depth",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_share_distinct_id",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_user_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_tag_value",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_tag_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_trigger_scene",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_action_type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_chatbot_version",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_session_id",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_evaluation_choose",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_response_content",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_send_content",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_response_id",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_tips_module",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_tips_content",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_issuccess",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_tips_type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_popup_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_ins_idfv",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_channel_link_id",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_channel_app_precise_result",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_product_category",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_commodity_id",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_operate_entrance",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_settle_state",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "t1"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/SQLDW')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/blob2')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1335,36 +2072,14 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/AzureDatabricks1')]",
+			"name": "[concat(parameters('factoryName'), '/AzureMySql')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"type": "AzureDatabricks",
+				"type": "AzureMySql",
 				"typeProperties": {
-					"domain": "https://adb-4564075640623917.1.databricks.azure.cn",
-					"accessToken": {
-						"type": "SecureString",
-						"value": "[parameters('AzureDatabricks1_accessToken')]"
-					},
-					"newClusterNodeType": "Standard_DS3_v2",
-					"newClusterNumOfWorker": "1",
-					"newClusterVersion": "10.4.x-scala2.12",
-					"newClusterInitScripts": [],
-					"clusterOption": "Fixed"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureKeyVault1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureKeyVault",
-				"typeProperties": {
-					"baseUrl": "[parameters('AzureKeyVault1_properties_typeProperties_baseUrl')]"
+					"connectionString": "[parameters('AzureMySql_connectionString')]"
 				}
 			},
 			"dependsOn": []
@@ -1378,6 +2093,25 @@
 				"type": "AzureMySql",
 				"typeProperties": {
 					"connectionString": "[parameters('AzureMySql1_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "Self-IR1",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/Self-IR1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzurePostgreSql1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzurePostgreSql",
+				"typeProperties": {
+					"connectionString": "[parameters('AzurePostgreSql1_connectionString')]"
 				}
 			},
 			"dependsOn": []
@@ -1410,15 +2144,9 @@
 						"type": "SecureString",
 						"value": "[parameters('Hdfs1_password')]"
 					}
-				},
-				"connectVia": {
-					"referenceName": "self-ir",
-					"type": "IntegrationRuntimeReference"
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/self-ir')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/HttpServer1')]",
@@ -1436,20 +2164,14 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/SharePointOnlineList1')]",
+			"name": "[concat(parameters('factoryName'), '/SQLDW')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"type": "SharePointOnlineList",
+				"type": "AzureSqlDW",
 				"typeProperties": {
-					"siteUrl": "https://mcpbi.sharepoint.cn/",
-					"tenantId": "5691a5bf-29c0-43e2-b547-1377a4110078",
-					"servicePrincipalId": "[parameters('SharePointOnlineList1_properties_typeProperties_servicePrincipalId')]",
-					"servicePrincipalKey": {
-						"type": "SecureString",
-						"value": "[parameters('SharePointOnlineList1_servicePrincipalKey')]"
-					}
+					"connectionString": "[parameters('SQLDW_connectionString')]"
 				}
 			},
 			"dependsOn": []
@@ -1499,15 +2221,7 @@
 			"properties": {
 				"annotations": [],
 				"runtimeState": "Stopped",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "pipeline3",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
+				"pipelines": [],
 				"type": "ScheduleTrigger",
 				"typeProperties": {
 					"recurrence": {
@@ -1529,9 +2243,7 @@
 					}
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/pipeline3')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/trigger3')]",
@@ -1580,16 +2292,8 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "pipeline2",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
+				"runtimeState": "Stopped",
+				"pipelines": [],
 				"type": "ScheduleTrigger",
 				"typeProperties": {
 					"recurrence": {
@@ -1611,9 +2315,7 @@
 					}
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/pipeline2')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/trigger5')]",
@@ -1625,7 +2327,7 @@
 				"pipelines": [
 					{
 						"pipelineReference": {
-							"referenceName": "pipeline4",
+							"referenceName": "VariablesTest",
 							"type": "PipelineReference"
 						},
 						"parameters": {}
@@ -1653,11 +2355,11 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/pipeline4')]"
+				"[concat(variables('factoryId'), '/pipelines/VariablesTest')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/self-ir')]",
+			"name": "[concat(parameters('factoryName'), '/Self-IR1')]",
 			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
 			"apiVersion": "2018-06-01",
 			"properties": {

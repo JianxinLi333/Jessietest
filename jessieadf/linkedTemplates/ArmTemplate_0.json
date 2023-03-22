@@ -15,53 +15,41 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage1'"
 		},
-		"AzureDatabricks1_accessToken": {
+		"AzureMySql_connectionString": {
 			"type": "secureString",
-			"metadata": "Secure string for 'accessToken' of 'AzureDatabricks1'"
+			"metadata": "Secure string for 'connectionString' of 'AzureMySql'"
 		},
-		"AzureMySql1_connectionString": {
+		"AzurePostgreSql1_connectionString": {
 			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureMySql1'"
+			"metadata": "Secure string for 'connectionString' of 'AzurePostgreSql1'"
 		},
 		"AzureSqlDatabase1_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase1'"
 		},
-		"SharePointOnlineList1_servicePrincipalKey": {
+		"Hdfs1_password": {
 			"type": "secureString",
-			"metadata": "Secure string for 'servicePrincipalKey' of 'SharePointOnlineList1'"
+			"metadata": "Secure string for 'password' of 'Hdfs1'"
 		},
-		"AzureBatch1_accessKey": {
+		"SQLDW_connectionString": {
 			"type": "secureString",
-			"metadata": "Secure string for 'accessKey' of 'AzureBatch1'"
+			"metadata": "Secure string for 'connectionString' of 'SQLDW'"
 		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://adlsnorth2jessie.dfs.core.chinacloudapi.cn/"
 		},
-		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+		"Hdfs1_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "https://jessiekv.vault.azure.cn/"
+			"defaultValue": "http://52.130.158.42:9870/webhdfs/v1/"
+		},
+		"Hdfs1_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "user"
 		},
 		"HttpServer1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://mcpbi.sharepoint.cn/_api/web/GetFileByServerRelativeUrl('/Shared%20Documents/test.xlsx')/$value"
-		},
-		"SharePointOnlineList1_properties_typeProperties_servicePrincipalId": {
-			"type": "string",
-			"defaultValue": "371dfc71-2a41-40f4-995c-b11f4b244b7b"
-		},
-		"AzureBatch1_properties_typeProperties_batchUri": {
-			"type": "string",
-			"defaultValue": "https://jessiebatchcn3.chinanorth3.batch.chinacloudapi.cn"
-		},
-		"AzureBatch1_properties_typeProperties_poolName": {
-			"type": "string",
-			"defaultValue": "pool1"
-		},
-		"AzureBatch1_properties_typeProperties_accountName": {
-			"type": "string",
-			"defaultValue": "jessiebatchcn3"
 		}
 	},
 	"variables": {
@@ -99,49 +87,27 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/AzureDatabricks1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureDatabricks",
-				"typeProperties": {
-					"domain": "https://adb-4564075640623917.1.databricks.azure.cn",
-					"accessToken": {
-						"type": "SecureString",
-						"value": "[parameters('AzureDatabricks1_accessToken')]"
-					},
-					"newClusterNodeType": "Standard_DS3_v2",
-					"newClusterNumOfWorker": "1",
-					"newClusterVersion": "10.4.x-scala2.12",
-					"newClusterInitScripts": [],
-					"clusterOption": "Fixed"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureKeyVault1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureKeyVault",
-				"typeProperties": {
-					"baseUrl": "[parameters('AzureKeyVault1_properties_typeProperties_baseUrl')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureMySql1')]",
+			"name": "[concat(parameters('factoryName'), '/AzureMySql')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
 				"type": "AzureMySql",
 				"typeProperties": {
-					"connectionString": "[parameters('AzureMySql1_connectionString')]"
+					"connectionString": "[parameters('AzureMySql_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzurePostgreSql1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzurePostgreSql",
+				"typeProperties": {
+					"connectionString": "[parameters('AzurePostgreSql1_connectionString')]"
 				}
 			},
 			"dependsOn": []
@@ -155,6 +121,25 @@
 				"type": "AzureSqlDatabase",
 				"typeProperties": {
 					"connectionString": "[parameters('AzureSqlDatabase1_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Hdfs1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "Hdfs",
+				"typeProperties": {
+					"url": "[parameters('Hdfs1_properties_typeProperties_url')]",
+					"authenticationType": "Windows",
+					"userName": "[parameters('Hdfs1_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('Hdfs1_password')]"
+					}
 				}
 			},
 			"dependsOn": []
@@ -175,26 +160,82 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/SharePointOnlineList1')]",
+			"name": "[concat(parameters('factoryName'), '/SQLDW')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"type": "SharePointOnlineList",
+				"type": "AzureSqlDW",
 				"typeProperties": {
-					"siteUrl": "https://mcpbi.sharepoint.cn/",
-					"tenantId": "5691a5bf-29c0-43e2-b547-1377a4110078",
-					"servicePrincipalId": "[parameters('SharePointOnlineList1_properties_typeProperties_servicePrincipalId')]",
-					"servicePrincipalKey": {
-						"type": "SecureString",
-						"value": "[parameters('SharePointOnlineList1_servicePrincipalKey')]"
+					"connectionString": "[parameters('SQLDW_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/trigger2')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Stopped",
+				"pipelines": [],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Month",
+						"interval": 3,
+						"startTime": "2022-12-19T08:26:00",
+						"timeZone": "China Standard Time",
+						"schedule": {
+							"minutes": [
+								10
+							],
+							"hours": [
+								10
+							],
+							"monthDays": [
+								7
+							]
+						}
 					}
 				}
 			},
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/self-ir')]",
+			"name": "[concat(parameters('factoryName'), '/trigger4')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Stopped",
+				"pipelines": [],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Month",
+						"interval": 3,
+						"startTime": "2023-01-01T08:30:00",
+						"timeZone": "China Standard Time",
+						"schedule": {
+							"minutes": [
+								30
+							],
+							"hours": [
+								10
+							],
+							"monthDays": [
+								1
+							]
+						}
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Self-IR1')]",
 			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -228,13 +269,8 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "AzureMySql1",
+					"referenceName": "AzureMySql",
 					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"tableName": {
-						"type": "string"
-					}
 				},
 				"folder": {
 					"name": "folder1"
@@ -264,14 +300,135 @@
 					}
 				],
 				"typeProperties": {
-					"tableName": {
-						"value": "@dataset().tableName",
-						"type": "Expression"
-					}
+					"tableName": "`t1`"
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureMySql1')]"
+				"[concat(variables('factoryId'), '/linkedServices/AzureMySql')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureMySqlTable2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureMySql",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureMySqlTable",
+				"schema": [
+					{
+						"name": "id",
+						"precision": 10,
+						"scale": 0
+					},
+					{
+						"name": "fruit",
+						"precision": 23,
+						"scale": 0
+					}
+				],
+				"typeProperties": {
+					"tableName": "`t2`"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureMySql')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureMySqlTable3')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureMySql",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureMySqlTable",
+				"schema": [
+					{
+						"name": "a_event",
+						"precision": 220,
+						"scale": 0
+					},
+					{
+						"name": "a_date",
+						"precision": 220,
+						"scale": 0
+					}
+				],
+				"typeProperties": {
+					"tableName": "`events_qpi_test_column`"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureMySql')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzurePostgreSqlTable1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzurePostgreSql1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzurePostgreSqlTable",
+				"schema": [
+					{
+						"name": "jobid",
+						"precision": 19,
+						"scale": 0
+					},
+					{
+						"name": "schedule",
+						"scale": 0
+					},
+					{
+						"name": "command",
+						"scale": 0
+					},
+					{
+						"name": "nodename",
+						"scale": 0
+					},
+					{
+						"name": "nodeport",
+						"precision": 10,
+						"scale": 0
+					},
+					{
+						"name": "database",
+						"scale": 0
+					},
+					{
+						"name": "username",
+						"scale": 0
+					},
+					{
+						"name": "active",
+						"precision": 1,
+						"scale": 0
+					},
+					{
+						"name": "jobname",
+						"precision": 64,
+						"scale": 0
+					}
+				],
+				"typeProperties": {
+					"schema": "information_schema",
+					"table": "collations"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzurePostgreSql1')]"
 			]
 		},
 		{
@@ -406,245 +563,6 @@
 						"type": "String"
 					}
 				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DelimitedText2')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureDataLakeStorage1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "cc.csv",
-						"fileSystem": "input"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\\"
-				},
-				"schema": [
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Parquet1')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureDataLakeStorage1",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"filePath": {
-						"type": "string"
-					},
-					"containerName": {
-						"type": "string"
-					},
-					"fileName": {
-						"type": "string"
-					}
-				},
-				"folder": {
-					"name": "folder1"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": {
-							"value": "@dataset().fileName",
-							"type": "Expression"
-						},
-						"folderPath": {
-							"value": "@dataset().filePath",
-							"type": "Expression"
-						},
-						"fileSystem": "output"
-					},
-					"compressionCodec": "gzip"
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Parquet2')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureDataLakeStorage1",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "folder1"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "t_task_list_test.parquet",
-						"folderPath": "cxdata",
-						"fileSystem": "output"
-					},
-					"compressionCodec": "gzip"
-				},
-				"schema": [
-					{
-						"name": "task_id",
-						"type": "INT32"
-					},
-					{
-						"name": "commitment_id",
-						"type": "INT32"
-					},
-					{
-						"name": "use_case_id",
-						"type": "INT32"
-					},
-					{
-						"name": "task_name",
-						"type": "UTF8"
-					},
-					{
-						"name": "task_main_type",
-						"type": "UTF8"
-					},
-					{
-						"name": "task_type",
-						"type": "UTF8"
-					},
-					{
-						"name": "task_status",
-						"type": "UTF8"
-					},
-					{
-						"name": "task_desc",
-						"type": "UTF8"
-					},
-					{
-						"name": "sas_id",
-						"type": "INT32"
-					},
-					{
-						"name": "create_time",
-						"type": "INT96"
-					},
-					{
-						"name": "update_time",
-						"type": "INT96"
-					},
-					{
-						"name": "create_by",
-						"type": "UTF8"
-					},
-					{
-						"name": "update_by",
-						"type": "UTF8"
-					},
-					{
-						"name": "version",
-						"type": "INT32"
-					},
-					{
-						"name": "direction_status",
-						"type": "UTF8"
-					},
-					{
-						"name": "sync_status",
-						"type": "UTF8"
-					},
-					{
-						"name": "is_delete",
-						"type": "UTF8"
-					},
-					{
-						"name": "is_trigger",
-						"type": "UTF8"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/blob2')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Binary",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"container": "cdh-hadoop"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureBatch1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBatch",
-				"typeProperties": {
-					"batchUri": "[parameters('AzureBatch1_properties_typeProperties_batchUri')]",
-					"poolName": "[parameters('AzureBatch1_properties_typeProperties_poolName')]",
-					"accountName": "[parameters('AzureBatch1_properties_typeProperties_accountName')]",
-					"linkedServiceName": {
-						"referenceName": "AzureBlobStorage1",
-						"type": "LinkedServiceReference"
-					},
-					"accessKey": {
-						"type": "SecureString",
-						"value": "[parameters('AzureBatch1_accessKey')]"
-					}
-				}
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"

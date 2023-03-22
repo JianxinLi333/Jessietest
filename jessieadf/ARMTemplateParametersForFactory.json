@@ -14,10 +14,13 @@
 		"AzureDataLakeStorage1_accountKey": {
 			"value": ""
 		},
-		"AzureDatabricks1_accessToken": {
+		"AzureMySql_connectionString": {
 			"value": ""
 		},
 		"AzureMySql1_connectionString": {
+			"value": ""
+		},
+		"AzurePostgreSql1_connectionString": {
 			"value": ""
 		},
 		"AzureSqlDatabase1_connectionString": {
@@ -26,7 +29,7 @@
 		"Hdfs1_password": {
 			"value": ""
 		},
-		"SharePointOnlineList1_servicePrincipalKey": {
+		"SQLDW_connectionString": {
 			"value": ""
 		},
 		"AzureBatch1_properties_typeProperties_batchUri": {
@@ -41,9 +44,6 @@
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"value": "https://adlsnorth2jessie.dfs.core.chinacloudapi.cn/"
 		},
-		"AzureKeyVault1_properties_typeProperties_baseUrl": {
-			"value": "https://jessiekv.vault.azure.cn/"
-		},
 		"Hdfs1_properties_typeProperties_url": {
 			"value": "http://52.130.158.42:9870/webhdfs/v1/"
 		},
@@ -52,9 +52,6 @@
 		},
 		"HttpServer1_properties_typeProperties_url": {
 			"value": "https://mcpbi.sharepoint.cn/_api/web/GetFileByServerRelativeUrl('/Shared%20Documents/test.xlsx')/$value"
-		},
-		"SharePointOnlineList1_properties_typeProperties_servicePrincipalId": {
-			"value": "371dfc71-2a41-40f4-995c-b11f4b244b7b"
 		}
 	}
 }

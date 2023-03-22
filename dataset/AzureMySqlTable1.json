@@ -2,13 +2,8 @@
 	"name": "AzureMySqlTable1",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "AzureMySql1",
+			"referenceName": "AzureMySql",
 			"type": "LinkedServiceReference"
-		},
-		"parameters": {
-			"tableName": {
-				"type": "string"
-			}
 		},
 		"folder": {
 			"name": "folder1"
@@ -38,10 +33,7 @@
 			}
 		],
 		"typeProperties": {
-			"tableName": {
-				"value": "@dataset().tableName",
-				"type": "Expression"
-			}
+			"tableName": "`t1`"
 		}
 	},
 	"type": "Microsoft.DataFactory/factories/datasets"

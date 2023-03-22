@@ -248,10 +248,12 @@
 		],
 		"parameters": {
 			"container": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "output"
 			},
 			"path": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "DW"
 			}
 		},
 		"annotations": [],

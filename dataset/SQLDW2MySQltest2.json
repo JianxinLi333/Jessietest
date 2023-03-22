@@ -1,0 +1,26 @@
+{
+	"name": "SQLDW2MySQltest2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SQLDW",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [
+			{
+				"name": "id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "fruit",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "t2"
+		}
+	}
+}

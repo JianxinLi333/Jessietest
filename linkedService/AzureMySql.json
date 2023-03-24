@@ -5,8 +5,8 @@
 		"annotations": [],
 		"type": "AzureMySql",
 		"typeProperties": {
-			"connectionString": "server=mydemoserver.mysql.database.chinacloudapi.cn;port=3306;database=test0315;uid=testdb_user@mydemoserver;sslmode=1;usesystemtruststore=0",
-			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJlNTlhZjNjYy00M2RhLTQ4Y2MtOWI0My1lMjQ3NTg2OWNhOGUiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+			"connectionString": "server=mydemoserver.mysql.database.chinacloudapi.cn;port=3306;database=test0315;uid=myadmin@mydemoserver;sslmode=1;usesystemtruststore=0",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJhYTc3OWVkYi1jYzRmLTQzNDgtOGI5YS1hZDg2MWM1ZWY3ZGYiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
 		},
 		"connectVia": {
 			"referenceName": "Self-IR1",

@@ -43,6 +43,15 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'SQLDW'"
 		},
+		"SqlServer1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'SqlServer1'",
+			"defaultValue": "Integrated Security=True;Data Source=tcp:143.64.19.209,1433;Initial Catalog=master"
+		},
+		"SqlServer1_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'SqlServer1'"
+		},
 		"AzureBatch1_properties_typeProperties_batchUri": {
 			"type": "string",
 			"defaultValue": "https://jessiebatchcn3.chinanorth3.batch.chinacloudapi.cn"
@@ -70,6 +79,10 @@
 		"HttpServer1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://mcpbi.sharepoint.cn/_api/web/GetFileByServerRelativeUrl('/Shared%20Documents/test.xlsx')/$value"
+		},
+		"SqlServer1_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "jessie"
 		},
 		"containerUri": {
 			"type": "string",
@@ -101,12 +114,6 @@
 					"AzureBlobStorage1_connectionString": {
 						"value": "[parameters('AzureBlobStorage1_connectionString')]"
 					},
-					"AzureDataLakeStorage1_accountKey": {
-						"value": "[parameters('AzureDataLakeStorage1_accountKey')]"
-					},
-					"AzureMySql_connectionString": {
-						"value": "[parameters('AzureMySql_connectionString')]"
-					},
 					"AzurePostgreSql1_connectionString": {
 						"value": "[parameters('AzurePostgreSql1_connectionString')]"
 					},
@@ -119,8 +126,11 @@
 					"SQLDW_connectionString": {
 						"value": "[parameters('SQLDW_connectionString')]"
 					},
-					"AzureDataLakeStorage1_properties_typeProperties_url": {
-						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
+					"SqlServer1_connectionString": {
+						"value": "[parameters('SqlServer1_connectionString')]"
+					},
+					"SqlServer1_password": {
+						"value": "[parameters('SqlServer1_password')]"
 					},
 					"Hdfs1_properties_typeProperties_url": {
 						"value": "[parameters('Hdfs1_properties_typeProperties_url')]"
@@ -130,6 +140,9 @@
 					},
 					"HttpServer1_properties_typeProperties_url": {
 						"value": "[parameters('HttpServer1_properties_typeProperties_url')]"
+					},
+					"SqlServer1_properties_typeProperties_userName": {
+						"value": "[parameters('SqlServer1_properties_typeProperties_userName')]"
 					}
 				}
 			},
@@ -152,6 +165,12 @@
 					"AzureBatch1_accessKey": {
 						"value": "[parameters('AzureBatch1_accessKey')]"
 					},
+					"AzureDataLakeStorage1_accountKey": {
+						"value": "[parameters('AzureDataLakeStorage1_accountKey')]"
+					},
+					"AzureMySql_connectionString": {
+						"value": "[parameters('AzureMySql_connectionString')]"
+					},
 					"AzureMySql1_connectionString": {
 						"value": "[parameters('AzureMySql1_connectionString')]"
 					},
@@ -163,6 +182,9 @@
 					},
 					"AzureBatch1_properties_typeProperties_accountName": {
 						"value": "[parameters('AzureBatch1_properties_typeProperties_accountName')]"
+					},
+					"AzureDataLakeStorage1_properties_typeProperties_url": {
+						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
 					}
 				}
 			},

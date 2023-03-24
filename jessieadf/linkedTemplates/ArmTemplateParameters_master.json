@@ -32,6 +32,12 @@
 		"SQLDW_connectionString": {
 			"value": ""
 		},
+		"SqlServer1_connectionString": {
+			"value": "Integrated Security=True;Data Source=tcp:143.64.19.209,1433;Initial Catalog=master"
+		},
+		"SqlServer1_password": {
+			"value": ""
+		},
 		"AzureBatch1_properties_typeProperties_batchUri": {
 			"value": "https://jessiebatchcn3.chinanorth3.batch.chinacloudapi.cn"
 		},
@@ -52,6 +58,9 @@
 		},
 		"HttpServer1_properties_typeProperties_url": {
 			"value": "https://mcpbi.sharepoint.cn/_api/web/GetFileByServerRelativeUrl('/Shared%20Documents/test.xlsx')/$value"
+		},
+		"SqlServer1_properties_typeProperties_userName": {
+			"value": "jessie"
 		},
 		"containerUri": {
 			"value": ""

@@ -14,18 +14,10 @@
 		"type": "ScheduleTrigger",
 		"typeProperties": {
 			"recurrence": {
-				"frequency": "Day",
+				"frequency": "Minute",
 				"interval": 1,
 				"startTime": "2023-03-06T15:34:00",
-				"timeZone": "China Standard Time",
-				"schedule": {
-					"minutes": [
-						15
-					],
-					"hours": [
-						9
-					]
-				}
+				"timeZone": "China Standard Time"
 			}
 		}
 	}

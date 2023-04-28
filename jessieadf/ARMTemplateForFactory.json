@@ -68,6 +68,26 @@
 			"type": "string",
 			"defaultValue": "https://adlsnorth2jessie.dfs.core.chinacloudapi.cn/"
 		},
+		"AzureMLService1_properties_typeProperties_subscriptionId": {
+			"type": "string",
+			"defaultValue": "413eb882-b134-4b64-b202-519e1fe3a994"
+		},
+		"AzureMLService1_properties_typeProperties_resourceGroupName": {
+			"type": "string",
+			"defaultValue": "AlexML"
+		},
+		"AzureMLService1_properties_typeProperties_mlWorkspaceName": {
+			"type": "string",
+			"defaultValue": "alextestml"
+		},
+		"AzureMLService1_properties_typeProperties_servicePrincipalId": {
+			"type": "string",
+			"defaultValue": "11ea5abb-a25e-479a-94fc-cc0bfe2e77db"
+		},
+		"AzureMLService1_properties_typeProperties_tenant": {
+			"type": "string",
+			"defaultValue": "b388b808-0ec9-4a09-a414-a7cbbd8b7e9b"
+		},
 		"Hdfs1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "http://52.130.158.42:9870/webhdfs/v1/"
@@ -83,6 +103,10 @@
 		"SqlServer1_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "jessie"
+		},
+		"jessieAzureKeyVault_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://jessiekv.vault.azure.cn/"
 		}
 	},
 	"variables": {
@@ -442,7 +466,8 @@
 						"type": "String"
 					}
 				},
-				"annotations": []
+				"annotations": [],
+				"lastPublishTime": "2023-03-22T03:17:22Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/AzurePostgreSqlTable1')]"
@@ -455,8 +480,8 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "Copy data1",
-						"type": "Copy",
+						"name": "Machine Learning Execute Pipeline1",
+						"type": "AzureMLExecutePipeline",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "0.12:00:00",
@@ -467,59 +492,25 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"source": {
-								"type": "SqlDWSource",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"sink": {
-								"type": "ParquetSink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings"
-								},
-								"formatSettings": {
-									"type": "ParquetWriteSettings"
-								}
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
+							"experimentName": "e2e_registered_components",
+							"mlExecutionType": "pipeline",
+							"mlPipelineId": "832cf451-15ee-4e39-926b-b3efb728e888"
 						},
-						"inputs": [
-							{
-								"referenceName": "SQLDW2MySQLtest3",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "Parquet1",
-								"type": "DatasetReference",
-								"parameters": {
-									"filePath": "DW",
-									"containerName": "output",
-									"fileName": "EVENTS_QPI_test_column"
-								}
-							}
-						]
+						"linkedServiceName": {
+							"referenceName": "AzureMLService1",
+							"type": "LinkedServiceReference"
+						}
 					}
 				],
 				"policy": {
 					"elapsedTimeMetric": {},
 					"cancelAfter": {}
 				},
-				"annotations": []
+				"annotations": [],
+				"lastPublishTime": "2023-04-24T03:04:30Z"
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/SQLDW2MySQLtest3')]",
-				"[concat(variables('factoryId'), '/datasets/Parquet1')]"
+				"[concat(variables('factoryId'), '/linkedServices/AzureMLService1')]"
 			]
 		},
 		{
@@ -2224,6 +2215,33 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/AzureMLService1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureMLService",
+				"typeProperties": {
+					"subscriptionId": "[parameters('AzureMLService1_properties_typeProperties_subscriptionId')]",
+					"resourceGroupName": "[parameters('AzureMLService1_properties_typeProperties_resourceGroupName')]",
+					"mlWorkspaceName": "[parameters('AzureMLService1_properties_typeProperties_mlWorkspaceName')]",
+					"servicePrincipalId": "[parameters('AzureMLService1_properties_typeProperties_servicePrincipalId')]",
+					"servicePrincipalKey": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "jessieAzureKeyVault",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "spsecret"
+					},
+					"tenant": "[parameters('AzureMLService1_properties_typeProperties_tenant')]"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/jessieAzureKeyVault')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/AzureMySql')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -2353,21 +2371,26 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/jessieAzureKeyVault')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureKeyVault",
+				"typeProperties": {
+					"baseUrl": "[parameters('jessieAzureKeyVault_properties_typeProperties_baseUrl')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/trigger1')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "Pipeline1",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
+				"runtimeState": "Stopped",
+				"pipelines": [],
 				"type": "ScheduleTrigger",
 				"typeProperties": {
 					"recurrence": {
@@ -2378,9 +2401,7 @@
 					}
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/Pipeline1')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/trigger2')]",
@@ -2420,15 +2441,7 @@
 			"properties": {
 				"annotations": [],
 				"runtimeState": "Stopped",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "testbatch",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
+				"pipelines": [],
 				"type": "ScheduleTrigger",
 				"typeProperties": {
 					"recurrence": {
@@ -2450,9 +2463,7 @@
 					}
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/testbatch')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/trigger4')]",

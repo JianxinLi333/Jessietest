@@ -50,6 +50,21 @@
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"value": "https://adlsnorth2jessie.dfs.core.chinacloudapi.cn/"
 		},
+		"AzureMLService1_properties_typeProperties_subscriptionId": {
+			"value": "413eb882-b134-4b64-b202-519e1fe3a994"
+		},
+		"AzureMLService1_properties_typeProperties_resourceGroupName": {
+			"value": "AlexML"
+		},
+		"AzureMLService1_properties_typeProperties_mlWorkspaceName": {
+			"value": "alextestml"
+		},
+		"AzureMLService1_properties_typeProperties_servicePrincipalId": {
+			"value": "11ea5abb-a25e-479a-94fc-cc0bfe2e77db"
+		},
+		"AzureMLService1_properties_typeProperties_tenant": {
+			"value": "b388b808-0ec9-4a09-a414-a7cbbd8b7e9b"
+		},
 		"Hdfs1_properties_typeProperties_url": {
 			"value": "http://52.130.158.42:9870/webhdfs/v1/"
 		},
@@ -61,6 +76,9 @@
 		},
 		"SqlServer1_properties_typeProperties_userName": {
 			"value": "jessie"
+		},
+		"jessieAzureKeyVault_properties_typeProperties_baseUrl": {
+			"value": "https://jessiekv.vault.azure.cn/"
 		},
 		"containerUri": {
 			"value": ""

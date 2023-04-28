@@ -68,6 +68,26 @@
 			"type": "string",
 			"defaultValue": "https://adlsnorth2jessie.dfs.core.chinacloudapi.cn/"
 		},
+		"AzureMLService1_properties_typeProperties_subscriptionId": {
+			"type": "string",
+			"defaultValue": "413eb882-b134-4b64-b202-519e1fe3a994"
+		},
+		"AzureMLService1_properties_typeProperties_resourceGroupName": {
+			"type": "string",
+			"defaultValue": "AlexML"
+		},
+		"AzureMLService1_properties_typeProperties_mlWorkspaceName": {
+			"type": "string",
+			"defaultValue": "alextestml"
+		},
+		"AzureMLService1_properties_typeProperties_servicePrincipalId": {
+			"type": "string",
+			"defaultValue": "11ea5abb-a25e-479a-94fc-cc0bfe2e77db"
+		},
+		"AzureMLService1_properties_typeProperties_tenant": {
+			"type": "string",
+			"defaultValue": "b388b808-0ec9-4a09-a414-a7cbbd8b7e9b"
+		},
 		"Hdfs1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "http://52.130.158.42:9870/webhdfs/v1/"
@@ -83,6 +103,10 @@
 		"SqlServer1_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "jessie"
+		},
+		"jessieAzureKeyVault_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://jessiekv.vault.azure.cn/"
 		},
 		"containerUri": {
 			"type": "string",
@@ -143,6 +167,9 @@
 					},
 					"SqlServer1_properties_typeProperties_userName": {
 						"value": "[parameters('SqlServer1_properties_typeProperties_userName')]"
+					},
+					"jessieAzureKeyVault_properties_typeProperties_baseUrl": {
+						"value": "[parameters('jessieAzureKeyVault_properties_typeProperties_baseUrl')]"
 					}
 				}
 			},
@@ -185,6 +212,21 @@
 					},
 					"AzureDataLakeStorage1_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
+					},
+					"AzureMLService1_properties_typeProperties_subscriptionId": {
+						"value": "[parameters('AzureMLService1_properties_typeProperties_subscriptionId')]"
+					},
+					"AzureMLService1_properties_typeProperties_resourceGroupName": {
+						"value": "[parameters('AzureMLService1_properties_typeProperties_resourceGroupName')]"
+					},
+					"AzureMLService1_properties_typeProperties_mlWorkspaceName": {
+						"value": "[parameters('AzureMLService1_properties_typeProperties_mlWorkspaceName')]"
+					},
+					"AzureMLService1_properties_typeProperties_servicePrincipalId": {
+						"value": "[parameters('AzureMLService1_properties_typeProperties_servicePrincipalId')]"
+					},
+					"AzureMLService1_properties_typeProperties_tenant": {
+						"value": "[parameters('AzureMLService1_properties_typeProperties_tenant')]"
 					}
 				}
 			},

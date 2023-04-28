@@ -22,5 +22,6 @@
 		"typeProperties": {
 			"tableName": "`events_qpi_test_column`"
 		}
-	}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
 }

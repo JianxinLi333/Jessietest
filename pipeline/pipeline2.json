@@ -3,8 +3,8 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1",
-				"type": "Copy",
+				"name": "Machine Learning Execute Pipeline1",
+				"type": "AzureMLExecutePipeline",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -15,49 +15,18 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"source": {
-						"type": "SqlDWSource",
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
-					},
-					"sink": {
-						"type": "ParquetSink",
-						"storeSettings": {
-							"type": "AzureBlobFSWriteSettings"
-						},
-						"formatSettings": {
-							"type": "ParquetWriteSettings"
-						}
-					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
+					"experimentName": "e2e_registered_components",
+					"mlExecutionType": "pipeline",
+					"mlPipelineId": "832cf451-15ee-4e39-926b-b3efb728e888"
 				},
-				"inputs": [
-					{
-						"referenceName": "SQLDW2MySQLtest3",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "Parquet1",
-						"type": "DatasetReference",
-						"parameters": {
-							"filePath": "DW",
-							"containerName": "output",
-							"fileName": "EVENTS_QPI_test_column"
-						}
-					}
-				]
+				"linkedServiceName": {
+					"referenceName": "AzureMLService1",
+					"type": "LinkedServiceReference"
+				}
 			}
 		],
-		"annotations": []
-	}
+		"annotations": [],
+		"lastPublishTime": "2023-04-24T03:04:30Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
 }

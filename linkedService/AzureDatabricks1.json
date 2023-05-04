@@ -1,0 +1,13 @@
+{
+	"name": "AzureDatabricks1",
+	"properties": {
+		"annotations": [],
+		"type": "AzureDatabricks",
+		"typeProperties": {
+			"domain": "https://adb-4564075640623917.1.databricks.azure.cn",
+			"authentication": "MSI",
+			"workspaceResourceId": "/subscriptions/48005cc9-8069-4f08-a110-fcd36b6c3e7d/resourceGroups/SQLRG/providers/Microsoft.Databricks/workspaces/jessiedbfs",
+			"existingClusterId": "0309-072243-wsm40k7i"
+		}
+	}
+}

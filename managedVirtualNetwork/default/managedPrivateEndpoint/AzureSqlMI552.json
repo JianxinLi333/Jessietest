@@ -1,0 +1,7 @@
+{
+	"name": "AzureSqlMI552",
+	"properties": {
+		"privateLinkResourceId": "/subscriptions/5bbf0cbb-647d-4bd8-b4e6-26629f109bd7/resourceGroups/SQLMIRG/providers/Microsoft.Sql/managedInstances/ciesqlmi",
+		"groupId": "managedInstance"
+	}
+}

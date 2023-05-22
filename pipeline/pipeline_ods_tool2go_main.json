@@ -1,11 +1,224 @@
 {
-	"name": "pipeline3",
+	"name": "pipeline_ods_tool2go_main",
 	"properties": {
 		"activities": [
 			{
-				"name": "Notebook1",
-				"type": "DatabricksNotebook",
+				"name": "set_bizdate",
+				"description": "设置T+1时间变量",
+				"type": "SetVariable",
 				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "bizdate",
+					"value": {
+						"value": "@string(formatDateTime(adddays(addhours(utcnow(),8),-1),'yyyyMMdd'))",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "merge_tool2go_aims",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "refresh_aims",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "merge_tool2go_cms",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "refresh_cms",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "merge_tool2go_wms",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "refresh_wms",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "merge_tool2go_ums",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "refresh_ums",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "merge_tool2go_pms",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "refresh_pms",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "merge_tool2go_oms",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "refresh_oms",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "copydata_tool2go_aims",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "set_bizdate",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "copydata_tool2go_cms",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "set_bizdate",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "copydata_tool2go_oms",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "set_bizdate",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "copydata_tool2go_pms",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "set_bizdate",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "copydata_tool2go_ums",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "set_bizdate",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "copydata_tool2go_wms",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "set_bizdate",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "refresh_aims",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "copydata_tool2go_aims",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -15,26 +228,154 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Users/li.jianxin@microsoftinternal.partner.onmschina.cn/testforadf",
-					"baseParameters": {
-						"Nstate": {
-							"value": "@pipeline().parameters.state",
-							"type": "Expression"
-						}
+					"notebookPath": {
+						"value": "/work/notebooks/sql_script/sql_ods_refresh_metastore/sql_ods_refresh_tool2go/refresh_tool2go_aims",
+						"type": "Expression"
 					}
+				}
+			},
+			{
+				"name": "refresh_cms",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "copydata_tool2go_cms",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
 				},
-				"linkedServiceName": {
-					"referenceName": "AzureDatabricks1",
-					"type": "LinkedServiceReference"
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": {
+						"value": "/work/notebooks/sql_script/sql_ods_refresh_metastore/sql_ods_refresh_tool2go/refresh_tool2go_cms",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "refresh_oms",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "copydata_tool2go_oms",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": {
+						"value": "/work/notebooks/sql_script/sql_ods_refresh_metastore/sql_ods_refresh_tool2go/refresh_tool2go_oms",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "refresh_pms",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "copydata_tool2go_pms",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": {
+						"value": "/work/notebooks/sql_script/sql_ods_refresh_metastore/sql_ods_refresh_tool2go/refresh_tool2go_pms",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "refresh_ums",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "copydata_tool2go_ums",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": {
+						"value": "/work/notebooks/sql_script/sql_ods_refresh_metastore/sql_ods_refresh_tool2go/refresh_tool2go_ums",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "refresh_wms",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "copydata_tool2go_wms",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": {
+						"value": "/work/notebooks/sql_script/sql_ods_refresh_metastore/sql_ods_refresh_tool2go/refresh_tool2go_wms",
+						"type": "Expression"
+					}
 				}
 			}
 		],
-		"parameters": {
-			"state": {
-				"type": "string",
-				"defaultValue": "123456"
+		"concurrency": 1,
+		"variables": {
+			"bizdate": {
+				"type": "String"
 			}
 		},
-		"annotations": []
-	}
+		"folder": {
+			"name": "pipeline_ods_merge/pipeline_ods_merge_tool2go"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-05-14T15:27:00Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
 }

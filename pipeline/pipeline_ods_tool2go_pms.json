@@ -1,0 +1,191 @@
+{
+	"name": "pipeline_ods_tool2go_pms",
+	"properties": {
+		"activities": [
+			{
+				"name": "Set bizdate",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "bizdate",
+					"value": {
+						"value": "@string(formatDateTime(adddays(addhours(utcnow(),8),-1),'yyyyMMdd'))",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "merge_pms_product",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "Set bizdate",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": {
+						"value": "/work/notebooks/sql_script/sql_ods/sql_ods_merge_tool2go/sql_merge_ods_043_tool2go_pms_product_df",
+						"type": "Expression"
+					},
+					"baseParameters": {
+						"bizdate": {
+							"value": "@variables('bizdate')",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "merge_pms_product_category",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "Set bizdate",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": {
+						"value": "/work/notebooks/sql_script/sql_ods/sql_ods_merge_tool2go/sql_merge_ods_045_tool2go_pms_product_category_df",
+						"type": "Expression"
+					},
+					"baseParameters": {
+						"bizdate": {
+							"value": "@variables('bizdate')",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "merge_pms_product_rental_type",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "Set bizdate",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": {
+						"value": "/work/notebooks/sql_script/sql_ods/sql_ods_merge_tool2go/sql_merge_ods_050_tool2go_pms_product_rental_type_df",
+						"type": "Expression"
+					},
+					"baseParameters": {
+						"bizdate": {
+							"value": "@variables('bizdate')",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "merge_pms_product_shop_category",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "Set bizdate",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": {
+						"value": "/work/notebooks/sql_script/sql_ods/sql_ods_merge_tool2go/sql_merge_ods_051_tool2go_pms_product_shop_category_df",
+						"type": "Expression"
+					},
+					"baseParameters": {
+						"bizdate": {
+							"value": "@variables('bizdate')",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "merge_pms_scene",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "Set bizdate",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": {
+						"value": "/work/notebooks/sql_script/sql_ods/sql_ods_merge_tool2go/sql_merge_ods_052_tool2go_pms_scene_df",
+						"type": "Expression"
+					},
+					"baseParameters": {
+						"bizdate": {
+							"value": "@variables('bizdate')",
+							"type": "Expression"
+						}
+					}
+				}
+			}
+		],
+		"variables": {
+			"bizdate": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "pipeline_ods_merge/pipeline_ods_merge_tool2go"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-05-06T08:08:17Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

@@ -1,0 +1,41 @@
+{
+	"name": "export_pbi",
+	"properties": {
+		"description": "导出PBI报告",
+		"activities": [
+			{
+				"name": "export_pbi",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://api.powerbi.cn/v1.0/myorg/groups/d5c6bf58-bb0c-4aa9-bbf2-76211ddb912a/reports/31d68f9b-84b8-489f-8075-589764b8b7c8/Export",
+					"method": "GET",
+					"headers": {
+						"Authorization": {
+							"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Il9DSkFPdHlzWVZtNXhjMVlvSzBvUTdxeUJDUSIsImtpZCI6Il9DSkFPdHlzWVZtNXhjMVlvSzBvUTdxeUJDUSJ9.eyJhdWQiOiJodHRwczovL2FuYWx5c2lzLmNoaW5hY2xvdWRhcGkuY24vcG93ZXJiaS9hcGkiLCJpc3MiOiJodHRwczovL3N0cy5jaGluYWNsb3VkYXBpLmNuLzkzNDJlY2M1LWI1NDktNGVjNi04NTI4LWY0Zjk3MTU4YTk0Yy8iLCJpYXQiOjE2ODU0MzE5MDQsIm5iZiI6MTY4NTQzMTkwNCwiZXhwIjoxNjg1NDM1ODA0LCJhaW8iOiI0MkpnWUhEYzg4dWJKOFdoS1hIK21uQVQzYkt2QUE9PSIsImFwcGlkIjoiNzU1NDZiOTktZDJlZC00Y2UxLWFhMmYtNmVhYmEyZjgzN2U0IiwiYXBwaWRhY3IiOiIxIiwiaWRwIjoiaHR0cHM6Ly9zdHMuY2hpbmFjbG91ZGFwaS5jbi85MzQyZWNjNS1iNTQ5LTRlYzYtODUyOC1mNGY5NzE1OGE5NGMvIiwib2lkIjoiNjFhZDMxYmEtZTA5Yi00NmQzLWIyNDQtZWVmNTI3MTMxNjdiIiwicmgiOiIwLkFRTUF4ZXhDazBtMXhrNkZLUFQ1Y1ZpcFRBa0FBQUFBQUFBQXdBQUFBQUFBQUFBQkFBQS4iLCJzdWIiOiI2MWFkMzFiYS1lMDliLTQ2ZDMtYjI0NC1lZWY1MjcxMzE2N2IiLCJ0aWQiOiI5MzQyZWNjNS1iNTQ5LTRlYzYtODUyOC1mNGY5NzE1OGE5NGMiLCJ1dGkiOiJ3a1VBTWVzcTYwaUVGZ0NuZmx3Y0FRIiwidmVyIjoiMS4wIn0.vOGVl7hBCo8W1P84hT4Pd1i3YIBXPdGFVycSTKyvIhLqixUqCDdGX9Vd2BtiINDsawmYsAaj-jFat7D0msixVvybI3M_TNklE0m6wsP8ogZhPMBozN0xOtRVBjINLOOmR-D5InFqCBlwTF47mjvX7hGozfNhIZHzNimGn3MGZ2V-UVdfbeMhv0AxioHEsrQ93Osf_63tZ5kxTUN2j7wEJYWeNURQDmnCO0LRhLnShd2gmuwgORuerwNzU5iLOCMXYBPaEhK4nM8TL7J-6RepTfF855JkPHRDQVwmQLeDM44jtmpWQNyqyx78xT6CQWagnWs_ba4DwRNsjhM-moIV9A",
+							"type": "Expression"
+						}
+					}
+				}
+			}
+		],
+		"variables": {
+			"tenent_id": {
+				"type": "String",
+				"defaultValue": "9342ecc5-b549-4ec6-8528-f4f97158a94c"
+			}
+		},
+		"folder": {
+			"name": "PBI Call"
+		},
+		"annotations": []
+	}
+}

@@ -1,0 +1,245 @@
+{
+	"name": "Json1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "data2.json",
+				"fileSystem": "input"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"enqueuedTime": {
+					"type": "string"
+				},
+				"SCHEMA_MAPPER": {
+					"type": "string"
+				},
+				"device": {
+					"type": "string"
+				},
+				"deviceid": {
+					"type": "string"
+				},
+				"deviceip": {
+					"type": "string"
+				},
+				"gateway": {
+					"type": "string"
+				},
+				"line": {
+					"type": "string"
+				},
+				"msgtime": {
+					"type": "string"
+				},
+				"msgtype": {
+					"type": "string"
+				},
+				"msgversion": {
+					"type": "string"
+				},
+				"plant": {
+					"type": "string"
+				},
+				"technology": {
+					"type": "string"
+				},
+				"Feeder": {
+					"type": "integer"
+				},
+				"MACProcess": {
+					"type": "string"
+				},
+				"MACReference": {
+					"type": "number"
+				},
+				"MAC current": {
+					"type": "number"
+				},
+				"Tool": {
+					"type": "integer"
+				},
+				"area": {
+					"type": "string"
+				},
+				"carbodyID": {
+					"type": "string"
+				},
+				"cleanTime": {
+					"type": "integer"
+				},
+				"dateTime": {
+					"type": "string"
+				},
+				"deviceName": {
+					"type": "string"
+				},
+				"dropTimeActual": {
+					"type": "number"
+				},
+				"dropTimeMaximum": {
+					"type": "number"
+				},
+				"dropTimeMinimum": {
+					"type": "number"
+				},
+				"dropVoltage": {
+					"type": "integer"
+				},
+				"facilityName": {
+					"type": "string"
+				},
+				"installedLocation": {
+					"type": "string"
+				},
+				"ip": {
+					"type": "string"
+				},
+				"liftHeightActual": {
+					"type": "number"
+				},
+				"liftheightMaximum": {
+					"type": "number"
+				},
+				"liftheightMinimum": {
+					"type": "number"
+				},
+				"liftheightReference": {
+					"type": "number"
+				},
+				"location": {
+					"type": "string"
+				},
+				"mainWeldcurrentVoltageActual": {
+					"type": "number"
+				},
+				"mainWeldcurrentVoltageMaximum": {
+					"type": "integer"
+				},
+				"mainWeldcurrentVoltageMinimum": {
+					"type": "integer"
+				},
+				"mode": {
+					"type": "string"
+				},
+				"oaip": {
+					"type": "string"
+				},
+				"optimization": {
+					"type": "string"
+				},
+				"outlet": {
+					"type": "integer"
+				},
+				"outletWeldcounter": {
+					"type": "integer"
+				},
+				"outletWeldcounterWOP": {
+					"type": "integer"
+				},
+				"pLCNo": {
+					"type": "string"
+				},
+				"peakVoltage": {
+					"type": "integer"
+				},
+				"penetrationActual": {
+					"type": "number"
+				},
+				"penetrationMaximum": {
+					"type": "number"
+				},
+				"penetrationMinimum": {
+					"type": "number"
+				},
+				"penetrationReference": {
+					"type": "number"
+				},
+				"pilotWeldcurrentArcVoltageActual": {
+					"type": "number"
+				},
+				"pilotWeldcurrentArcVoltageMaximum": {
+					"type": "integer"
+				},
+				"pilotWeldcurrentArcVoltageMinimum": {
+					"type": "integer"
+				},
+				"productStructure": {
+					"type": "string"
+				},
+				"sourceId": {
+					"type": "string"
+				},
+				"stickOutActual": {
+					"type": "number"
+				},
+				"stickOutMaximum": {
+					"type": "number"
+				},
+				"stickOutMinimum": {
+					"type": "number"
+				},
+				"studId": {
+					"type": "string"
+				},
+				"systemWeldcounter": {
+					"type": "integer"
+				},
+				"time": {
+					"type": "string"
+				},
+				"toolType": {
+					"type": "string"
+				},
+				"toolWeldcounter": {
+					"type": "integer"
+				},
+				"type": {
+					"type": "string"
+				},
+				"weldEnergyActual": {
+					"type": "integer"
+				},
+				"weldEnergyMaximum": {
+					"type": "string"
+				},
+				"weldEnergyMinimum": {
+					"type": "string"
+				},
+				"weldMode": {
+					"type": "string"
+				},
+				"weldcurrentActual": {
+					"type": "integer"
+				},
+				"weldcurrentReference": {
+					"type": "integer"
+				},
+				"weldtimeActual": {
+					"type": "number"
+				},
+				"weldtimeMaximum": {
+					"type": "integer"
+				},
+				"weldtimeMinimum": {
+					"type": "integer"
+				},
+				"weldtimeReference": {
+					"type": "integer"
+				},
+				"MACcurrent": {
+					"type": "number"
+				}
+			}
+		}
+	}
+}

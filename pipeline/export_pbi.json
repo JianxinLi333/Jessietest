@@ -25,6 +25,27 @@
 						}
 					}
 				}
+			},
+			{
+				"name": "GetBearerToken",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://login.partner.microsoftonline.cn/5691a5bf-29c0-43e2-b547-1377a4110078/oauth2/token",
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/json"
+					},
+					"body": "grant_type=client_credentials&client_id=[Client-ID]@[Tenant-ID]&client_secret=[Client-Secret]&resource=00000003-0000-0ff1-ce00-000000000000/[Tenant-Name].sharepoint.com@[Tenant-ID]"
+				}
 			}
 		],
 		"variables": {

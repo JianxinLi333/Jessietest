@@ -25,7 +25,7 @@
 				}
 			},
 			{
-				"name": "Copy data1",
+				"name": "CopyReportToStorage",
 				"type": "Copy",
 				"dependsOn": [
 					{

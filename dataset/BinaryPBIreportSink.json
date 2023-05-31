@@ -10,11 +10,14 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"folderPath": {
-					"value": "@utcnow()",
+				"fileName": {
+					"value": "@concat('Repoxt_', formatDateTime(utcnow(), 'yyyy-MM-ddTHH:mm:ss'),'.pbix')",
 					"type": "Expression"
 				},
 				"container": "output"
+			},
+			"compression": {
+				"type": "ZipDeflate"
 			}
 		}
 	}

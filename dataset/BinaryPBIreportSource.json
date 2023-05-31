@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "HttpServerLocation",
-				"relativeUrl": "/"
+				"relativeUrl": "v1.0/myorg/groups/9601b9d1-e558-4f1f-ab37-43525529156a/reports/0e0af91d-a0b8-4212-86c4-6a35985e59a5/Export"
 			}
 		}
 	}

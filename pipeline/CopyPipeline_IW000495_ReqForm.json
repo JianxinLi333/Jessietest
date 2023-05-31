@@ -1,0 +1,50 @@
+{
+	"name": "CopyPipeline_IW000495_ReqForm",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy_IW000495_ReqForm",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "."
+					},
+					{
+						"name": "Destination",
+						"value": "iProcess.Storage_IW000495_ReqForm"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "select * from V_IW000495_BI",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "SqlDWSink",
+						"preCopyScript": "truncate table [iProcess].[Storage_IW000495_ReqForm]",
+						"writeBehavior": "Insert",
+						"tableOption": "autoCreate",
+						"disableMetricsCollection": false
+					},
+					"enableStaging": true
+				}
+			}
+		],
+		"folder": {
+			"name": "CopyPipeline"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-04-27T03:44:10Z"
+	},
+	"type": "Microsoft.Synapse/workspaces/pipelines"
+}

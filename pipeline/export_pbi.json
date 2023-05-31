@@ -29,7 +29,7 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "GetBearerToken",
+						"activity": "ExportPBIReport",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -70,7 +70,13 @@
 				"inputs": [
 					{
 						"referenceName": "BinaryPBIreportSource",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"ExportID": {
+								"value": "@activity('ExportPBIReport').output.id",
+								"type": "Expression"
+							}
+						}
 					}
 				],
 				"outputs": [
@@ -79,6 +85,40 @@
 						"type": "DatasetReference"
 					}
 				]
+			},
+			{
+				"name": "ExportPBIReport",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "GetBearerToken",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://api.powerbi.cn/v1.0/myorg/groups/9601b9d1-e558-4f1f-ab37-43525529156a/reports/0e0af91d-a0b8-4212-86c4-6a35985e59a5/ExportTo",
+					"method": "POST",
+					"headers": {
+						"Authorization": {
+							"value": "@{concat('Bearer ', activity('GetBearerToken').output.access_token)}",
+							"type": "Expression"
+						},
+						"Content-Type": "application/json"
+					},
+					"body": {
+						"format": "PDF"
+					}
+				}
 			}
 		],
 		"variables": {

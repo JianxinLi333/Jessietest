@@ -1,0 +1,81 @@
+{
+	"name": "Main_Pipeline_IW000495",
+	"properties": {
+		"activities": [
+			{
+				"name": "Execute CopyPipeline_IW000495_ReqForm",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "Execute CopyPipeline_IW000495_DetailSO",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "Execute CopyPipeline_IW000495_DetailPO",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "Execute CopyPipeline_IW000495_DetailRobot",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "Execute Pipeline_IW000495_DetailSOAggr",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Execute CopyPipeline_IW000495_DetailSO",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "Execute Pipeline_IW000495_DetailPOAggr",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Execute CopyPipeline_IW000495_DetailPO",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"folder": {
+			"name": "Trigger Main Pipeline"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-04-27T09:19:12Z"
+	},
+	"type": "Microsoft.Synapse/workspaces/pipelines"
+}

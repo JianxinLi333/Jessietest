@@ -16,7 +16,7 @@
 			"location": {
 				"type": "HttpServerLocation",
 				"relativeUrl": {
-					"value": "@{concat(dataset().ExportID,'==/file')}",
+					"value": "@{concat(dataset().ExportID,'/file')}",
 					"type": "Expression"
 				}
 			}

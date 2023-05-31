@@ -1,122 +1,62 @@
 {
-	"name": "dataflow1",
+	"name": "Dataflow_IW000495_DetailPOAggr",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
 				{
-					"dataset": {
-						"referenceName": "Json1",
-						"type": "DatasetReference"
-					},
-					"name": "source1"
+					"name": "sourceIW000495DetailPO"
 				}
 			],
 			"sinks": [
 				{
-					"dataset": {
-						"referenceName": "Json2",
-						"type": "DatasetReference"
-					},
-					"name": "sink1"
+					"name": "sinkIW000495DetailPOAggr"
 				}
 			],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "aggregate1"
+				},
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "sort1"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
-				"          enqueuedTime as string,",
-				"          SCHEMA_MAPPER as string,",
-				"          device as string,",
-				"          deviceid as string,",
-				"          deviceip as string,",
-				"          gateway as string,",
-				"          line as string,",
-				"          msgtime as string,",
-				"          msgtype as string,",
-				"          msgversion as string,",
-				"          plant as string,",
-				"          technology as string,",
-				"          Feeder as integer,",
-				"          MACProcess as string,",
-				"          MACReference as double,",
-				"          {MAC current} as double,",
-				"          Tool as integer,",
-				"          area as string,",
-				"          carbodyID as string,",
-				"          cleanTime as integer,",
-				"          dateTime as string,",
-				"          deviceName as string,",
-				"          dropTimeActual as double,",
-				"          dropTimeMaximum as double,",
-				"          dropTimeMinimum as double,",
-				"          dropVoltage as integer,",
-				"          facilityName as string,",
-				"          installedLocation as string,",
-				"          ip as string,",
-				"          liftHeightActual as double,",
-				"          liftheightMaximum as double,",
-				"          liftheightMinimum as double,",
-				"          liftheightReference as double,",
-				"          location as string,",
-				"          mainWeldcurrentVoltageActual as double,",
-				"          mainWeldcurrentVoltageMaximum as integer,",
-				"          mainWeldcurrentVoltageMinimum as integer,",
-				"          mode as string,",
-				"          oaip as string,",
-				"          optimization as string,",
-				"          outlet as integer,",
-				"          outletWeldcounter as integer,",
-				"          outletWeldcounterWOP as integer,",
-				"          pLCNo as string,",
-				"          peakVoltage as integer,",
-				"          penetrationActual as double,",
-				"          penetrationMaximum as double,",
-				"          penetrationMinimum as double,",
-				"          penetrationReference as double,",
-				"          pilotWeldcurrentArcVoltageActual as double,",
-				"          pilotWeldcurrentArcVoltageMaximum as integer,",
-				"          pilotWeldcurrentArcVoltageMinimum as integer,",
-				"          productStructure as string,",
-				"          sourceId as string,",
-				"          stickOutActual as double,",
-				"          stickOutMaximum as double,",
-				"          stickOutMinimum as double,",
-				"          studId as string,",
-				"          systemWeldcounter as integer,",
-				"          time as string,",
-				"          toolType as string,",
-				"          toolWeldcounter as integer,",
-				"          type as string,",
-				"          weldEnergyActual as integer,",
-				"          weldEnergyMaximum as string,",
-				"          weldEnergyMinimum as string,",
-				"          weldMode as string,",
-				"          weldcurrentActual as integer,",
-				"          weldcurrentReference as integer,",
-				"          weldtimeActual as double,",
-				"          weldtimeMaximum as integer,",
-				"          weldtimeMinimum as integer,",
-				"          weldtimeReference as integer,",
-				"          MACcurrent as double",
+				"          ID as string,",
+				"          MainID as string,",
+				"          PONumber as string,",
+				"          POReceivedDate as timestamp,",
+				"          POValue as decimal(18,2),",
+				"          CreatedBy as string,",
+				"          CreatedByName as string,",
+				"          CreatedDate as timestamp,",
+				"          POFile as string,",
+				"          FileExt as string,",
+				"          FilePath as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
+				"     validateSchema: false) ~> sourceIW000495DetailPO",
+				"sort1 aggregate(groupBy(MainID),",
+				"     PONumber = collect(PONumber),",
+				"          POReceivedDate = collect(POReceivedDate),",
+				"          CreatedDate = collect(CreatedDate)) ~> aggregate1",
+				"aggregate1 derive(MainID = lower(MainID),",
+				"          PONumber = toString(PONumber),",
+				"          POReceivedDate = replace(toString(at(sort(mapIndex(POReceivedDate,toDate(#item)),compare(#item1, #item2)),1)),\"1900-01-01\",\"\"),",
+				"          CreatedDate = replace(toString(at(sort(mapIndex(CreatedDate,toDate(#item)),compare(#item1, #item2)),1)),\"1900-01-01\",\"\"),",
+				"          POReceivedDateList = replace(replace(replace(replace(toString(mapIndex(POReceivedDate,toDate(#item))),\"[\\\"\",\"\"),\"\\\"]\",\"\"),\"\\\",\\\"\",\";\"),\"1900-01-01\",\"\"),",
+				"          CreatedDateList = replace(replace(replace(replace(toString(mapIndex(CreatedDate,toDate(#item))),\"[\\\"\",\"\"),\"\\\"]\",\"\"),\"\\\",\\\"\",\";\"),\"1900-01-01\",\"\")) ~> derivedColumn1",
+				"sourceIW000495DetailPO sort(asc(CreatedDate, true)) ~> sort1",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false,",
-				"     documentForm: 'documentPerLine') ~> source1",
-				"source1 sink(allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     input(",
-				"          id as integer,",
-				"          json as string,",
-				"          desc_1 as string",
-				"     ),",
-				"     partitionFileNames:['new.json'],",
-				"     umask: 0022,",
-				"     preCommands: [],",
-				"     postCommands: [],",
+				"     truncate: true,",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     partitionBy('hash', 1)) ~> sink1"
+				"     format: 'table') ~> sinkIW000495DetailPOAggr"
 			]
 		}
 	}

@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "dataflow1",
+						"referenceName": "Dataflow_IW000495_DetailPOAggr",
 						"type": "DataFlowReference"
 					},
 					"compute": {

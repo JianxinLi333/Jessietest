@@ -1,0 +1,65 @@
+{
+	"name": "Dataflow_IW000495_DetailSOAggr",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"name": "sourceIW000495DetailSO",
+					"description": "Import data from sourceIW000495DetailSO"
+				}
+			],
+			"sinks": [
+				{
+					"name": "sinkIW000495DetailSOAggr",
+					"description": "Export data to sinkIW000495DetailSOAggr"
+				}
+			],
+			"transformations": [
+				{
+					"name": "aggregate1"
+				},
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "sort1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          MainID as string,",
+				"          SalesOrderNumber as string,",
+				"          OASent as string,",
+				"          OASentDate as timestamp,",
+				"          OrderConfirmationDate as timestamp,",
+				"          CreatedDate as timestamp",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false) ~> sourceIW000495DetailSO",
+				"sort1 aggregate(groupBy(MainID),",
+				"     SalesOrderNumber = collect(SalesOrderNumber),",
+				"          OASent = collect(OASent),",
+				"          OASentDate = collect(OASentDate),",
+				"          OrderConfirmationDate = collect(OrderConfirmationDate),",
+				"          CreatedDate = collect(CreatedDate)) ~> aggregate1",
+				"aggregate1 derive(MainID = lower(MainID),",
+				"          SalesOrderNumber = toString(SalesOrderNumber),",
+				"          OASent = toString(OASent),",
+				"          OASentDate = replace(toString(at(sort(mapIndex(OASentDate,toDate(#item)),iif(#item1 >= #item2, 1, -1)),1)),\"1900-01-01\",\"\"),",
+				"          OrderConfirmationDate = replace(toString(at(sort(mapIndex(OrderConfirmationDate,toDate(#item)),iif(#item1 >= #item2, 1, -1)),1)),\"1900-01-01\",\"\"),",
+				"          CreatedDate = replace(toString(at(sort(mapIndex(CreatedDate,toDate(#item)),iif(#item1 >= #item2, 1, -1)),1)),\"1900-01-01\",\"\"),",
+				"          OASentDateList = replace(replace(replace(replace(toString(mapIndex(OASentDate,toDate(#item))),\"[\\\"\",\"\"),\"\\\"]\",\"\"),\"\\\",\\\"\",\";\"),\"1900-01-01\",\"\"),",
+				"          OrderConfirmationDateList = replace(replace(replace(replace(toString(mapIndex(OrderConfirmationDate,toDate(#item))),\"[\\\"\",\"\"),\"\\\"]\",\"\"),\"\\\",\\\"\",\";\"),\"1900-01-01\",\"\"),",
+				"          CreatedDateList = replace(replace(replace(replace(toString(mapIndex(CreatedDate,toDate(#item))),\"[\\\"\",\"\"),\"\\\"]\",\"\"),\"\\\",\\\"\",\";\"),\"1900-01-01\",\"\")) ~> derivedColumn1",
+				"sourceIW000495DetailSO sort(asc(CreatedDate, true)) ~> sort1",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     truncate: true,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     format: 'table') ~> sinkIW000495DetailSOAggr"
+			]
+		}
+	}
+}

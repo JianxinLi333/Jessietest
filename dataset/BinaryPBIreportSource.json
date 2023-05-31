@@ -1,0 +1,17 @@
+{
+	"name": "BinaryPBIreportSource",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "HttpServer1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation",
+				"relativeUrl": "https://api.powerbi.cn/v1.0/myorg/groups/9601b9d1-e558-4f1f-ab37-43525529156a/reports/e0af91d-a0b8-4212-86c4-6a35985e59a5/Export"
+			}
+		}
+	}
+}

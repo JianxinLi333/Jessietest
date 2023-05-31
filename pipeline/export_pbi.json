@@ -42,10 +42,61 @@
 					"url": "https://login.partner.microsoftonline.cn/5691a5bf-29c0-43e2-b547-1377a4110078/oauth2/token",
 					"method": "POST",
 					"headers": {
-						"Content-Type": "application/json"
+						"Content-Type": "application/x-www-form-urlencoded"
 					},
-					"body": "grant_type=client_credentials&client_id=[Client-ID]@[Tenant-ID]&client_secret=[Client-Secret]&resource=00000003-0000-0ff1-ce00-000000000000/[Tenant-Name].sharepoint.com@[Tenant-ID]"
+					"body": "grant_type=client_credentials&client_id=355caa53-3507-4c95-98b9-a5d1ad80fe02&client_secret=8~-Ul4hLJ6IW35jN7.1ScLxChYC6_k1y-.&resource=https://analysis.chinacloudapi.cn/powerbi/api"
 				}
+			},
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "GetBearerToken",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "BinarySource",
+						"storeSettings": {
+							"type": "HttpReadSettings",
+							"requestMethod": "GET"
+						},
+						"formatSettings": {
+							"type": "BinaryReadSettings"
+						}
+					},
+					"sink": {
+						"type": "BinarySink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "BinaryPBIreportSource",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "BinaryPBIreportSink",
+						"type": "DatasetReference"
+					}
+				]
 			}
 		],
 		"variables": {

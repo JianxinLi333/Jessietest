@@ -5,20 +5,12 @@
 			"referenceName": "HttpServer1",
 			"type": "LinkedServiceReference"
 		},
-		"parameters": {
-			"ExportID": {
-				"type": "string"
-			}
-		},
 		"annotations": [],
 		"type": "Binary",
 		"typeProperties": {
 			"location": {
 				"type": "HttpServerLocation",
-				"relativeUrl": {
-					"value": "@{concat(dataset().ExportID,'/file')}",
-					"type": "Expression"
-				}
+				"relativeUrl": "/"
 			}
 		}
 	}

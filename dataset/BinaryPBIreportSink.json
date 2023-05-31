@@ -10,7 +10,10 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "report.pdf",
+				"folderPath": {
+					"value": "@utcnow()",
+					"type": "Expression"
+				},
 				"container": "output"
 			}
 		}

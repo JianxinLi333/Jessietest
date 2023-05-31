@@ -1,0 +1,95 @@
+{
+	"name": "export_pbi_copy1",
+	"properties": {
+		"description": "导出PBI报告",
+		"activities": [
+			{
+				"name": "GetBearerToken",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://login.partner.microsoftonline.cn/5691a5bf-29c0-43e2-b547-1377a4110078/oauth2/token",
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/x-www-form-urlencoded"
+					},
+					"body": "grant_type=client_credentials&client_id=355caa53-3507-4c95-98b9-a5d1ad80fe02&client_secret=8~-Ul4hLJ6IW35jN7.1ScLxChYC6_k1y-.&resource=https://analysis.chinacloudapi.cn/powerbi/api"
+				}
+			},
+			{
+				"name": "CopyReportToStorage",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "GetBearerToken",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "BinarySource",
+						"storeSettings": {
+							"type": "HttpReadSettings",
+							"requestMethod": "GET",
+							"additionalHeaders": {
+								"value": "@{concat('Authorization: Bearer ', activity('GetBearerToken').output.access_token)}",
+								"type": "Expression"
+							},
+							"requestTimeout": ""
+						},
+						"formatSettings": {
+							"type": "BinaryReadSettings"
+						}
+					},
+					"sink": {
+						"type": "BinarySink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "BinaryPBIreportSource",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "BinaryPBIreportSink",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"variables": {
+			"tenent_id": {
+				"type": "String",
+				"defaultValue": "9342ecc5-b549-4ec6-8528-f4f97158a94c"
+			}
+		},
+		"folder": {
+			"name": "PBI Call"
+		},
+		"annotations": []
+	}
+}

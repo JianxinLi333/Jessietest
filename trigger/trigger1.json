@@ -3,7 +3,14 @@
 	"properties": {
 		"annotations": [],
 		"runtimeState": "Stopped",
-		"pipelines": [],
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "CopyPipeline_MORChina_New",
+					"type": "PipelineReference"
+				}
+			}
+		],
 		"type": "ScheduleTrigger",
 		"typeProperties": {
 			"recurrence": {

@@ -1,0 +1,2310 @@
+{
+	"name": "CopyPipeline_MORChina_New",
+	"properties": {
+		"activities": [
+			{
+				"name": "ForEach_i8a",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.cw_items",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Copy_i8a",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [
+								{
+									"name": "Source",
+									"value": "@{item().source.tableName}"
+								},
+								{
+									"name": "Destination",
+									"value": "dbo.@{item().destination.table}"
+								}
+							],
+							"typeProperties": {
+								"source": {
+									"type": "MySqlSource",
+									"query": {
+										"value": "@item().copySource.query",
+										"type": "Expression"
+									}
+								},
+								"sink": {
+									"type": "AzureSqlSink",
+									"preCopyScript": {
+										"value": "truncate table @{item().destination.table}",
+										"type": "Expression"
+									},
+									"writeBehavior": "insert",
+									"disableMetricsCollection": false
+								},
+								"enableStaging": false,
+								"translator": {
+									"value": "@item().copyActivity.translator",
+									"type": "Expression"
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "SourceDataset_i8a",
+									"type": "DatasetReference"
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DestinationDataset_i8a",
+									"type": "DatasetReference"
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"cw_items": {
+				"type": "Array",
+				"defaultValue": [
+					{
+						"source": {
+							"tableName": "`faults`"
+						},
+						"destination": {
+							"table": "faults"
+						},
+						"copySource": {
+							"query": "select * from `faults`"
+						},
+						"copyActivity": {
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Fault: Fault category",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Fault: Fault category",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Fault: Fault date",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "Fault: Fault date",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "Fault: Fault description",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Fault: Fault description",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Fault: Fault occurrence period",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Fault: Fault occurrence period",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Fault: Fault review status",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Fault: Fault review status",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Fault: Fault solution",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Fault: Fault solution",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Fault: Fault warranty order number",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Fault: Fault warranty order number",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Fault: ID",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "Fault: ID",
+											"type": "Int64"
+										}
+									},
+									{
+										"source": {
+											"name": "Report: ID",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "Report: ID",
+											"type": "Int64"
+										}
+									},
+									{
+										"source": {
+											"name": "Report: Reporter",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Report: Reporter",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Report: Service report link",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Report: Service report link",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Report: Uploaded",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "Report: Uploaded",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: ID",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "Converter: ID",
+											"type": "Int64"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: Serial number",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Converter: Serial number",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Fault: Link to MoR",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Fault: Link to MoR",
+											"type": "String"
+										}
+									}
+								]
+							}
+						}
+					},
+					{
+						"source": {
+							"tableName": "`installations`"
+						},
+						"destination": {
+							"table": "installations"
+						},
+						"copySource": {
+							"query": "select * from `installations`"
+						},
+						"copyActivity": {
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Converter: ID",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "Converter: ID",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: Comment",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Converter: Comment",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: Commissioned by",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Converter: Commissioned by",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: Commissioning completion date",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "Converter: Commissioning completion date",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: Contractual delivery date",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "Converter: Contractual delivery date",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: Control platform",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Converter: Control platform",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: Converter process",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Converter: Converter process",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: Cplus",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Converter: Cplus",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: Customer tag",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Converter: Customer tag",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: Data Quality",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Converter: Data Quality",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: Drive monitor",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Converter: Drive monitor",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: Drivesmart configuration ID",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "Converter: Drivesmart configuration ID",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: End of warranty",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "Converter: End of warranty",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: Full common type code",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Converter: Full common type code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: Hardware release",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Converter: Hardware release",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: Incoterms",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Converter: Incoterms",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: Incoterm details",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Converter: Incoterm details",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: Industry",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Converter: Industry",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: Installation country",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Converter: Installation country",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: Life cycle phase",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Converter: Life cycle phase",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: Life cycle phase document",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Converter: Life cycle phase document",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: Manufacturing key",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Converter: Manufacturing key",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: Manufacturing location",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Converter: Manufacturing location",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: Network frequency [Hz]",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Converter: Network frequency Hz",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: Next life cycle phase",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Converter: Next life cycle phase",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: Next life cycle phase date",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "Converter: Next life cycle phase date",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: Nominal inverter power [kVA]",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Converter: Nominal inverter power kVA",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: Packaging",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Converter: Packaging",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: Plant altitude",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "Converter: Plant altitude",
+											"type": "Int64"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: Product",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Converter: Product",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: Product Key",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Converter: Product Key",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: Product subtype",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Converter: Product subtype",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: Rectifier pulse number",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "Converter: Rectifier pulse number",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: S/Nr first part",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Converter: S/Nr first part",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: S/Nr running number",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "Converter: S/Nr running number",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: SAP position",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Converter: SAP position",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: Serial number",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Converter: Serial number",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: Spare part kits",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Converter: Spare part kits",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: Status",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Converter: Status",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: TSA",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Converter: TSA",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: Transfer from factory to packing",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "Converter: Transfer from factory to packing",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: Type code",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Converter: Type code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: Warranty after commissioning",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "Converter: Warranty after commissioning",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: Warranty after delivery",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "Converter: Warranty after delivery",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: Warranty comment",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Converter: Warranty comment",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: Witness test",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Converter: Witness test",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: Witness test comment",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Converter: Witness test comment",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Project: Comment",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Project: Comment",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Project: Customer project manager",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Project: Customer project manager",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Project: Data Quality",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Project: Data Quality",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Project: DriveSmart project ID",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "Project: DriveSmart project ID",
+											"type": "Int64"
+										}
+									},
+									{
+										"source": {
+											"name": "Project: Project documents link",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Project: Project documents link",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Project: Order intake",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "Project: Order intake",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "Project: PRU/PU (local) SAP",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Project: PRU/PU (local) SAP",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Project: Planned commissioning date",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "Project: Planned commissioning date",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "Project: Project extent",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Project: Project extent",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Project: Project manager",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Project: Project manager",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Project: Project name",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Project: Project name",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Project: Project name (local language)",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Project: Project name (local language)",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Project: SF opportunity number",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Project: SF opportunity number",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Project: Responsibility",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Project: Responsibility",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Project: Service channel",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Project: Service channel",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Sales Data: ABB front-end sales division",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Sales Data: ABB front-end sales division",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Sales Data: ABB's direct 3rd party customer",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Sales Data: ABB's direct 3rd party customer",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Sales Data: Company name",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Sales Data: Company name",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Sales Data: Country of sales",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Sales Data: Country of sales",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Sales Data: Data Quality",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Sales Data: Data Quality",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Sales Data: Sales contact person",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Sales Data: Sales contact person",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Sales Data: Sales organisation",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Sales Data: Sales organisation",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Sales Data: Type of customer",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Sales Data: Type of customer",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Transformer: Data Quality",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Transformer: Data Quality",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Transformer: Manufacturer",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Transformer: Manufacturer",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Transformer: Manufacturing country",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Transformer: Manufacturing country",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Transformer: Number of transformers",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Transformer: Number of transformers",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Transformer: Primary voltage [V]",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Transformer: Primary voltage V",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "Transformer: Transformer type",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Transformer: Transformer type",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Site Information: City",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Site Information: City",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Site Information: Country",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Site Information: Country",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Site Information: ServIS Site ID",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Site Information: ServIS Site ID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Site Information: ServIS site operator",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Site Information: ServIS site operator",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Site Information: ServIS site owner",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Site Information: ServIS site owner",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Site Information: ServIS site type",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Site Information: ServIS site type",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Site Information: Site name",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Site Information: Site name",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: Site registration date",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "Converter: Site registration date",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: Site registration source",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Converter: Site registration source",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: Link to MoR",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Converter: Link to MoR",
+											"type": "String"
+										}
+									}
+								]
+							}
+						}
+					},
+					{
+						"source": {
+							"tableName": "`license_keys`"
+						},
+						"destination": {
+							"table": "license_keys"
+						},
+						"copySource": {
+							"query": "select * from `license_keys`"
+						},
+						"copyActivity": {
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "License Key: Creator",
+											"type": "String"
+										},
+										"sink": {
+											"name": "License Key: Creator",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "License Key: Created",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "License Key: Created",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "License Key: Identity",
+											"type": "String"
+										},
+										"sink": {
+											"name": "License Key: Identity",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "License Key: Hardware ID",
+											"type": "String"
+										},
+										"sink": {
+											"name": "License Key: Hardware ID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "License Key: License Key",
+											"type": "String"
+										},
+										"sink": {
+											"name": "License Key: License Key",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "License Key: Information",
+											"type": "String"
+										},
+										"sink": {
+											"name": "License Key: Information",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "License Key: Customer License",
+											"type": "String"
+										},
+										"sink": {
+											"name": "License Key: Customer License",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: ID",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "Converter: ID",
+											"type": "Int64"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: Serial number",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Converter: Serial number",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "License Key: Link to MoR",
+											"type": "String"
+										},
+										"sink": {
+											"name": "License Key: Link to MoR",
+											"type": "String"
+										}
+									}
+								]
+							}
+						}
+					},
+					{
+						"source": {
+							"tableName": "`machines`"
+						},
+						"destination": {
+							"table": "machines"
+						},
+						"copySource": {
+							"query": "select * from `machines`"
+						},
+						"copyActivity": {
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Machine: Application",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Machine: Application",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Machine: Connection",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Machine: Connection",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Machine: Data Quality",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Machine: Data Quality",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Machine: Excitation current",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Machine: Excitation current",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "Machine: Manufacturer",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Machine: Manufacturer",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Machine: Motortype",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Machine: Motortype",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Machine: Nominal motor frequency [Hz]",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Machine: Nominal motor frequency Hz",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "Machine: Nominal motor power [kW]",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Machine: Nominal motor power kW",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "Machine: Nominal motor speed [rpm]",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Machine: Nominal motor speed rpm",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "Machine: Nominal motor voltage [V]",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Machine: Nominal motor voltage V",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "Machine: Number of poles",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "Machine: Number of poles",
+											"type": "Int64"
+										}
+									},
+									{
+										"source": {
+											"name": "Machine: Rated motor power [kW]",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Machine: Rated motor power kW",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "Machine: Retrofit",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Machine: Retrofit",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Machine: Speed range max [rpm]",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Machine: Speed range max rpm",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "Machine: Speed range min [rpm]",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Machine: Speed range min rpm",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: ID",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "Converter: ID",
+											"type": "Int64"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: Serial number",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Converter: Serial number",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Machine: Link to MoR",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Machine: Link to MoR",
+											"type": "String"
+										}
+									}
+								]
+							}
+						}
+					},
+					{
+						"source": {
+							"tableName": "`parts`"
+						},
+						"destination": {
+							"table": "parts"
+						},
+						"copySource": {
+							"query": "select * from `parts`"
+						},
+						"copyActivity": {
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Replaced Part: Action",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Replaced Part: Action",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Replaced Part: ID",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "Replaced Part: ID",
+											"type": "Int64"
+										}
+									},
+									{
+										"source": {
+											"name": "Replaced Part: Material description",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Replaced Part: Material description",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Replaced Part: Module",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Replaced Part: Module",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Replaced Part: New S/Nr",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Replaced Part: New S/Nr",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Replaced Part: New part number",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Replaced Part: New part number",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Replaced Part: Old S/Nr",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Replaced Part: Old S/Nr",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Replaced Part: Parent S/Nr",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Replaced Part: Parent S/Nr",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Replaced Part: Parent part number",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Replaced Part: Parent part number",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Replaced Part: Part group",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Replaced Part: Part group",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Replaced Part: Part number",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Replaced Part: Part number",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Replaced Part: Part type",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Replaced Part: Part type",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Replaced Part: Position",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Replaced Part: Position",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Replaced Part: Position status",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Replaced Part: Position status",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Replaced Part: Quantity",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Replaced Part: Quantity",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "Replaced Part: Reason",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Replaced Part: Reason",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Replaced Part: SAP sales order",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Replaced Part: SAP sales order",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Replaced Part: SAP sales order item",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "Replaced Part: SAP sales order item",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "Replaced Part: Scrapped",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Replaced Part: Scrapped",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Replaced Part: Unit",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Replaced Part: Unit",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Fault: Fault category",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Fault: Fault category",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Fault: Fault date",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "Fault: Fault date",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "Fault: Fault description",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Fault: Fault description",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Fault: Fault occurrence period",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Fault: Fault occurrence period",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Fault: Fault review status",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Fault: Fault review status",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Fault: Fault solution",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Fault: Fault solution",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Fault: Fault warranty order number",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Fault: Fault warranty order number",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Fault: ID",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "Fault: ID",
+											"type": "Int64"
+										}
+									},
+									{
+										"source": {
+											"name": "Report: Reporter",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Report: Reporter",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Report: Service report link",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Report: Service report link",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Report: Uploaded",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "Report: Uploaded",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: ID",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "Converter: ID",
+											"type": "Int64"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: Serial number",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Converter: Serial number",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Replaced Part: Link to MoR",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Replaced Part: Link to MoR",
+											"type": "String"
+										}
+									}
+								]
+							}
+						}
+					},
+					{
+						"source": {
+							"tableName": "`reports`"
+						},
+						"destination": {
+							"table": "reports"
+						},
+						"copySource": {
+							"query": "select * from `reports`"
+						},
+						"copyActivity": {
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Report: ID",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "Report: ID",
+											"type": "Int64"
+										}
+									},
+									{
+										"source": {
+											"name": "Report: Reporter",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Report: Reporter",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Report: Service report link",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Report: Service report link",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Report: Uploaded",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "Report: Uploaded",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: ID",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "Converter: ID",
+											"type": "Int64"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: Serial number",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Converter: Serial number",
+											"type": "String"
+										}
+									}
+								]
+							}
+						}
+					},
+					{
+						"source": {
+							"tableName": "`service_events`"
+						},
+						"destination": {
+							"table": "service_events"
+						},
+						"copySource": {
+							"query": "select * from `service_events`"
+						},
+						"copyActivity": {
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Service Event: ID",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "Service Event: ID",
+											"type": "Int64"
+										}
+									},
+									{
+										"source": {
+											"name": "Service Event: Comment",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Service Event: Comment",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Service Event: Creation date",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "Service Event: Creation date",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "Service Event: Event date",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "Service Event: Event date",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "Service Event: Modified date",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "Service Event: Modified date",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "Service Event: Reporter",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Service Event: Reporter",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Service Event: Service type",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Service Event: Service type",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Report: ID",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "Report: ID",
+											"type": "Int64"
+										}
+									},
+									{
+										"source": {
+											"name": "Report: Reporter",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Report: Reporter",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Report: Service report link",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Report: Service report link",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Report: Uploaded",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "Report: Uploaded",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: ID",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "Converter: ID",
+											"type": "Int64"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: Serial number",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Converter: Serial number",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Service Event: Link to MoR",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Service Event: Link to MoR",
+											"type": "String"
+										}
+									}
+								]
+							}
+						}
+					},
+					{
+						"source": {
+							"tableName": "`software`"
+						},
+						"destination": {
+							"table": "software"
+						},
+						"copySource": {
+							"query": "select * from `software`"
+						},
+						"copyActivity": {
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Software: Board",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Software: Board",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Software: Cabinet / Device",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Software: Cabinet Device",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Software: File",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Software: File",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Software: Setting",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Software: Setting",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Software: Value",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Software: Value",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Software: Version",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Software: Version",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Software: Creation date",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "Software: Creation date",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "Software: Current version",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Software: Current version",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: ID",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "Converter: ID",
+											"type": "Int64"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: Serial number",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Converter: Serial number",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Software: Link to MoR",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Software: Link to MoR",
+											"type": "String"
+										}
+									}
+								]
+							}
+						}
+					},
+					{
+						"source": {
+							"tableName": "`updates`"
+						},
+						"destination": {
+							"table": "updates"
+						},
+						"copySource": {
+							"query": "select * from `updates`"
+						},
+						"copyActivity": {
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Update: Closed date",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "Update: Closed date",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "Update: Comment",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Update: Comment",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Update: Description",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Update: Description",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Update: Keyword",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Update: Keyword",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Update: Requested date",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "Update: Requested date",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "Update: Responsibility",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Update: Responsibility",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Update: Status",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Update: Status",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Update: Urgency",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Update: Urgency",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Update: Warranty no.",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Update: Warranty no.",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: ID",
+											"type": "Int64"
+										},
+										"sink": {
+											"name": "Converter: ID",
+											"type": "Int64"
+										}
+									},
+									{
+										"source": {
+											"name": "Converter: Serial number",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Converter: Serial number",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Update: Link to MoR",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Update: Link to MoR",
+											"type": "String"
+										}
+									}
+								]
+							}
+						}
+					}
+				]
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2021-08-04T05:41:17Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

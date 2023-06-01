@@ -1,0 +1,30 @@
+{
+	"name": "DestinationDataset_i8a",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabaseMOR",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "MT_KEY1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "MT_KEY2",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "MT_COMMENT",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "AUX_TABLE"
+		}
+	}
+}

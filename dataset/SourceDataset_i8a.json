@@ -1,0 +1,23 @@
+{
+	"name": "SourceDataset_i8a",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "MySqlLinkedServiceMORDB",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"cw_tableName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "MySqlTable",
+		"schema": [],
+		"typeProperties": {
+			"tableName": {
+				"value": "@dataset().cw_tableName",
+				"type": "Expression"
+			}
+		}
+	}
+}

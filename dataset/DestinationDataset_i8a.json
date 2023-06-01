@@ -5,6 +5,11 @@
 			"referenceName": "AzureSqlDatabaseMOR",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"cw_table": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": [
@@ -23,8 +28,14 @@
 			}
 		],
 		"typeProperties": {
-			"schema": "dbo",
-			"table": "AUX_TABLE"
+			"schema": {
+				"value": "dbo",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().cw_table",
+				"type": "Expression"
+			}
 		}
 	}
 }

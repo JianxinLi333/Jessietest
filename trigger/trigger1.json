@@ -3,14 +3,32 @@
 	"properties": {
 		"annotations": [],
 		"runtimeState": "Stopped",
-		"pipelines": [],
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "CopyPipeline_MORChina_New",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"cw_items": "1111"
+				}
+			}
+		],
 		"type": "ScheduleTrigger",
 		"typeProperties": {
 			"recurrence": {
-				"frequency": "Minute",
+				"frequency": "Day",
 				"interval": 1,
 				"startTime": "2023-03-06T15:34:00",
-				"timeZone": "China Standard Time"
+				"timeZone": "China Standard Time",
+				"schedule": {
+					"minutes": [
+						50
+					],
+					"hours": [
+						11
+					]
+				}
 			}
 		}
 	}

@@ -1,0 +1,102 @@
+{
+	"name": "pipeline1",
+	"properties": {
+		"activities": [
+			{
+				"name": "GetBearerToken",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://adlsnorth2jessie.blob.core.chinacloudapi.cn/public/reboot.sh",
+					"method": "GET"
+				}
+			},
+			{
+				"name": "If Condition1",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "GetBearerToken",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@contains(string(activity('GetBearerToken').output.ADFWebActivityResponseHeaders),'\"Content-Type\":\"application/json; charset=utf-8\"')\n",
+						"type": "Expression"
+					},
+					"ifFalseActivities": [
+						{
+							"name": "Copy data1",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "BinarySource",
+									"storeSettings": {
+										"type": "HttpReadSettings",
+										"requestMethod": "GET"
+									},
+									"formatSettings": {
+										"type": "BinaryReadSettings"
+									}
+								},
+								"sink": {
+									"type": "BinarySink",
+									"storeSettings": {
+										"type": "AzureBlobStorageWriteSettings"
+									}
+								},
+								"enableStaging": false
+							},
+							"inputs": [
+								{
+									"referenceName": "Binary1",
+									"type": "DatasetReference",
+									"parameters": {
+										"url": {
+											"value": "@pipeline().parameters.Json.url",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "BinaryPBIreportSink",
+									"type": "DatasetReference"
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"Json": {
+				"type": "object",
+				"defaultValue": "{     \"url\":\"https://adlsnorth2jessie.blob.core.chinacloudapi.cn/public/reboot.sh\",     \"expirationTime\": \"2023-06-03T03:42:26.2080849Z\",     \"ADFWebActivityResponseHeaders\": {         \"Pragma\": \"no-cache\",         \"Transfer-Encoding\": \"chunked\",         \"Strict-Transport-Security\": \"max-age=31536000; includeSubDomains;max-age=31536000; includeSubDomains\",         \"X-Frame-Options\": \"deny;deny\",         \"X-Content-Type-Options\": \"nosniff;nosniff\",         \"RequestId\": \"2551be36-d2e1-4f1e-921b-e8477b094ca6\",         \"Access-Control-Expose-Headers\": \"RequestId\",         \"request-redirected\": \"true\",         \"home-cluster-uri\": https://wabi-mc-sha-redirect.analysis.chinacloudapi.cn/,         \"Cache-Control\": \"no-store, must-revalidate, no-cache\",         \"Date\": \"Fri, 02 Jun 2023 03:42:47 GMT\",         \"Content-Type\": \"application/json; charset=utf-8\"     },     \"effectiveIntegrationRuntime\": \"AutoResolveIntegrationRuntime (China East 2)\",     \"executionDuration\": 74,     \"durationInQueue\": {         \"integrationRuntimeQueue\": 0     },     \"billingReference\": {         \"activityType\": \"ExternalActivity\",         \"billableDuration\": [             {                 \"meterType\": \"ManagedVNetIR\",                 \"duration\": 0.03333333333333333,                 \"unit\": \"Hours\"             }         ]     } }"
+			}
+		},
+		"annotations": []
+	}
+}

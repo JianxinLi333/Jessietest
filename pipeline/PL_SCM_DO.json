@@ -1,0 +1,45 @@
+{
+	"name": "PL_SCM_DO",
+	"properties": {
+		"activities": [
+			{
+				"name": "Iterate SCM folder",
+				"type": "GetMetadata",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "DS_SCM_Combined_DO_Folder",
+						"type": "DatasetReference"
+					},
+					"fieldList": [
+						"childItems",
+						"exists"
+					],
+					"storeSettings": {
+						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
+						"enablePartitionDiscovery": false
+					},
+					"formatSettings": {
+						"type": "DelimitedTextReadSettings"
+					}
+				}
+			}
+		],
+		"concurrency": 1,
+		"folder": {
+			"name": "SCM"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-05-29T02:13:57Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
